@@ -1,0 +1,644 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>第1课：行星能量收支 &mdash; Climate Modeling 0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Climate Modeling 0.0 documentation" href="index.html"/>
+        <link rel="next" title="第2课：求解零维能量平衡模式" href="02 Solving the zero-dimensional EBM.html"/>
+        <link rel="prev" title="Welcome to Climate Modeling’s documentation!" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Climate Modeling
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第1课：行星能量收支</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#1.-什么是气候模式？">1. 什么是气候模式？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#2.-观测的全球能量收支">2. 观测的全球能量收支</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#注：">注：</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#对于短波">对于短波</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#对于长波">对于长波</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#净吸收-=-0.9-W-m-2">净吸收 = 0.9 W m-2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#格外注意：">格外注意：</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#3.-量化行星能量收支">3. 量化行星能量收支</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#假定：">假定：</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#4.-最简单的气候模式：">4. 最简单的气候模式：</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#零维能量平衡模式（energy-balance-model,-EBM）">零维能量平衡模式（energy balance model, EBM）</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="02 Solving the zero-dimensional EBM.html">第2课：求解零维能量平衡模式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03 Climate Sensitivity and Feedback.html">第3课：气候敏感度和反馈</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Climate Modeling</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>第1课：行星能量收支</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/01 Planetary energy budget.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-bold { font-weight: bold; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="第1课：行星能量收支">
+<h1>第1课：行星能量收支<a class="headerlink" href="#第1课：行星能量收支" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="1.-什么是气候模式？">
+<h2>1. 什么是气候模式？<a class="headerlink" href="#1.-什么是气候模式？" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>什么是气候？</li>
+<li>什么是模式？</li>
+</ul>
+<p><strong>气候</strong>是 - 天气的统计，即温度和降水的时空平均 -
+（统计可能也是更高阶状态的平均：变化等）</p>
+<p><strong>气候模式</strong>最小定义：
+表示地球系统和太空间能量交换，以及它对平均表面温度的影响。</p>
+<p>注意行星能量收支。这是所有气候模拟的关键。</p>
+<p>回到Wikipedia: <a class="reference external" href="http://en.wikipedia.org/wiki/Climate_model">http://en.wikipedia.org/wiki/Climate_model</a></p>
+<p>气候模式用定量的方法模拟大气、海洋、陆面和海冰间的相互作用。它们用于各种目的，从研究气候系统的动力学到未来气候的预估。近几年讨论最多的关于气候模式的使用是预估来自温室气体大气浓度增加导致的温度变化。所有的气候模式都将来自太阳的短波电磁辐射，主要是可见光和短波（近红外），视为输入能量，以及来自地球的长波（远）红外电磁辐射作为输出能量。任何不平衡都会导致温度的变化。模式的范围可以从相对简单到相当复杂：</p>
+<ul class="simple">
+<li>一个简单的辐射传热模型，将地球视为一个点，平均输出能量</li>
+<li>这可以垂直扩展（辐射对流模式）或水平扩展</li>
+<li>最后，（耦合）大气-海洋-海冰全球气候模式离散化并求解质量和能量转移与辐射交换的完整方程。</li>
+</ul>
+<p>这不是一个完整的清单；例如“箱模式”可以处理跨海盆及海盆内部的洋流。此外，其他类型的模拟可以相互关联，如土地利用，使研究人员能够预测气候与生态系统之间的相互作用。</p>
+</div>
+<div class="section" id="2.-观测的全球能量收支">
+<h2>2. 观测的全球能量收支<a class="headerlink" href="#2.-观测的全球能量收支" title="Permalink to this headline">¶</a></h2>
+<p>下图显示当前全球，整个气候系统年平均能量通量的最佳估算。
+我们在整个课程中将看到这些许多过程。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">executable</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[1]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;/usr/local/opt/python/bin/python2.7&#39;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="n">Image</span><span class="p">(</span><span class="s1">&#39;./image/GlobalEnergyBudget.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[1]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="_images/01_Planetary_energy_budget_3_0.png" src="_images/01_Planetary_energy_budget_3_0.png" />
+</div>
+</div>
+<div class="section" id="注：">
+<h3>注：<a class="headerlink" href="#注：" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="对于短波">
+<h3>对于短波<a class="headerlink" href="#对于短波" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>全球平均反照率为101.9 W m-2/341.3 W m-2=0.299</li>
+<li>云反射 = 79 W m-2</li>
+<li>地表反射 = 23 W m-2<ul>
+<li>云反射是地表发射的3倍</li>
+</ul>
+</li>
+<li>大气吸收 = 78 W m-2 (与云反射相当)
+哪种气体对短波吸收有贡献？</li>
+<li>大部分是臭氧和水</li>
+</ul>
+</div>
+<div class="section" id="对于长波">
+<h3>对于长波<a class="headerlink" href="#对于长波" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>观测地表辐射 = 396 W m-2</li>
+<li>非常接近温度<img class="math" src="_images/math/c9a1ffe3b11352648993416000a330690efa7166.png" alt="T = 288 K"/>
+(全球平均表面温度)的黑体辐射:math:<cite>sigma T^4</cite>（一个黑体表面单位面积放出的能量正比于其绝对温度的4次方）</li>
+<li>但辐射到太空非常少 == 239 W m-2 (温室效应影响)</li>
+</ul>
+</div>
+<div class="section" id="净吸收-=-0.9-W-m-2">
+<h3>净吸收 = 0.9 W m-2<a class="headerlink" href="#净吸收-=-0.9-W-m-2" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="格外注意：">
+<h3>格外注意：<a class="headerlink" href="#格外注意：" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>这是能量收支，非温度收支</li>
+<li>将讨论上述两者联系</li>
+<li><strong>云</strong>影响收支的chang’bo</li>
+</ul>
+</div>
+</div>
+<div class="section" id="3.-量化行星能量收支">
+<h2>3. 量化行星能量收支<a class="headerlink" href="#3.-量化行星能量收支" title="Permalink to this headline">¶</a></h2>
+<p><strong>全球海气系统的能量</strong>收支：</p>
+<div class="math">
+<p><img src="_images/math/e6415c0f2985a1185d4d7eb16127479eb83f158f.png" alt="\begin{align*}
+\frac{dE}{dt} &amp;=  net\ energy\ flux\ in\ to\ system \\
+ &amp;= flux\ in - flux\ out
+\end{align*}"/></p>
+</div><p>其中E为总系统的焓或热含量。</p>
+<p>我们在<strong>每单位表面面积</strong>上表示收支，因此上述每一项单位为<img class="math" src="_images/math/3497794fcc5e9a7c23ae2391634a57a94ed844ff.png" alt="W m^{-2}"/>。</p>
+<p>注：不同圈层间（例如，海洋、陆面、海冰和大气间）任意内部能量交换不出现在这个收支中，因为E为所有圈层的总和。</p>
+<div class="section" id="假定：">
+<h3>假定：<a class="headerlink" href="#假定：" title="Permalink to this headline">¶</a></h3>
+<p><strong>对整个系统来说唯一重要的能量来源是来自和来自太空的辐射通量。</strong></p>
+<p>模拟那些大气层顶（top-of-atmosphere, TOA）的通量。</p>
+<p>进来的通量是入射的太阳辐射。太阳常数为</p>
+<div class="math">
+<p><img src="_images/math/6d610e39f957494da6774022ea4b79451a12f832.png" alt="\begin{equation*}
+S_0=1365.2 W m^{−2}
+\end{equation*}"/></p>
+</div><p>（所有值都与Trenberth and Fasullo图一致，除非有另外注释。）</p>
+<p>这是单位区域来自太阳入射到垂直于光束方向的能量通量。</p>
+<p>面积加权全球平均入射太阳通量为</p>
+<div class="math">
+<p><img src="_images/math/77b00ca3f3616b515bff674467899d841964e9e7.png" alt="\begin{equation*}
+Q=S_0\frac{A_{cross-section}}{A_{surface}}
+\end{equation*}"/></p>
+</div><p>这里 - <img class="math" src="_images/math/849cd33e5228c2d166ea15363a2d256ba7b05826.png" alt="A_{cross-section}"/> = 光束单位圆面积 = <img class="math" src="_images/math/fe51c738eb0bf1a034959756d65d1ae6515924bd.png" alt="\pi a^2"/> -
+<img class="math" src="_images/math/5bb82d2b3b4239fa1a9a25eed603ec7130b05c01.png" alt="A_{surface}"/> = 球表面面积 = <img class="math" src="_images/math/4f5f8d5efe5a453613ebb36226591c2335a88092.png" alt="4\pi a^2"/> - a = 地球半径</p>
+<p>因此入射通量为<img class="math" src="_images/math/2dc04a36726ee79fd1356a3874b2ac64f29cbd40.png" alt="Q = S_0/4 = 341.3 W m^{-2}"/></p>
+<p>出去的通量有两部分： - 反射的太阳辐射 - 逃逸的长波辐射</p>
+<p><strong>OLR = outgoing longwave radiation = 地面辐射到太空</strong></p>
+<p>定义行星反照率： - <img class="math" src="_images/math/877d234f4cec6974ce218fc2e975a486a7972dfd.png" alt="\alpha"/> = 反射的太阳通量/入射的太阳通量 -
+或反射通量 = <img class="math" src="_images/math/aa46ff370bb7cf2c7a3f6c4559730a09e5c95669.png" alt="\alpha Q = 101.9 W m^{-2}"/> -
+因此根据数据，<img class="math" src="_images/math/bc2781d477b27d2bffbc2ebbcc35f5bf972174aa.png" alt="\alpha \approx 0.3"/></p>
+<p>定义 <strong>ASR = absorbed solar radiation</strong></p>
+<div class="math">
+<p><img src="_images/math/2a1a2ec3fa78748475cb73e6e7794c114cd82c08.png" alt="\begin{equation*}
+ASR= incoming\ flux – reflected\ flux = Q−\alpha Q =(1−\alpha)Q
+\end{equation*}"/></p>
+</div><p>我们的能量收支为</p>
+<div class="math">
+<p><img src="_images/math/44c1d4010ffc2404526554785fa386bf947485c2.png" alt="\begin{equation*}
+\frac{dE}{dt} = (1-\alpha)Q-OLR
+\end{equation*}"/></p>
+</div><p>注意：这是一个<strong>普遍真实的陈述</strong>。我们刚刚定义了一些术语，并作出了非常好的假设，即唯一重要的能源是与空间的辐射交换。</p>
+<p><strong>这个方程是每个气候模式的起点。</strong></p>
+<p>但目前为止，我们实际上还没有一个模式。我们只有一个收支的叙述。为使用这个收支做一个模式，我们需要将收支中的术语与大气-海洋系统的状态变量联系起来。</p>
+<p>为此，我们最感兴趣的状态变量是<strong>温度</strong>——因为它直接与上述每项的物理性联系在一起。</p>
+</div>
+</div>
+<div class="section" id="4.-最简单的气候模式：">
+<h2>4. 最简单的气候模式：<a class="headerlink" href="#4.-最简单的气候模式：" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="零维能量平衡模式（energy-balance-model,-EBM）">
+<h3>零维能量平衡模式（energy balance model, EBM）<a class="headerlink" href="#零维能量平衡模式（energy-balance-model,-EBM）" title="Permalink to this headline">¶</a></h3>
+<p>假设地球行为像个黑体辐射器，有效全球平均辐射温度<img class="math" src="_images/math/f5339fd8776a3b7a951bfacc10f6c264c2722ca6.png" alt="T_e"/>：</p>
+<p>则</p>
+<div class="math">
+<p><img src="_images/math/258451c919f9dc345e3370eaaecb8676e642dde6.png" alt="\begin{equation*}
+OLR = \sigma T_e^4
+\end{equation*}"/></p>
+</div><p>其中<img class="math" src="_images/math/0fc36d6bcd2c16f8badfff198d040323582896bd.png" alt="\sigma = 5.67\times10^{-8} W m^{-2} k^{-4}"/>为Stefan-Boltzmann常数。</p>
+<p><strong>我们可以把它作为辐射温度的定义。</strong></p>
+<p>也假定</p>
+<div class="math">
+<p><img src="_images/math/1dbd6918f08aad31cda19e1d5915f5d26f0e808d.png" alt="\begin{equation*}
+E=CT_s
+\end{equation*}"/></p>
+</div><p>这里<img class="math" src="_images/math/a9768475a0024f74567dfa3db0f51240f0479382.png" alt="T_s"/>为全球平均表面温度，<img class="math" src="_images/math/afce44aa7c55836ca9345404c22fc7b599d2ed84.png" alt="C"/>为常数——大气-海洋单柱的有效热能。</p>
+<p><img class="math" src="_images/math/afce44aa7c55836ca9345404c22fc7b599d2ed84.png" alt="C"/>单位为<img class="math" src="_images/math/5141c7e22313948bbb8a9cfcdbe98fbc870fbead.png" alt="J m^{-2} K^{-1}"/>。</p>
+<p>为什么？稍后我们会更仔细地看待这个问题，但主要是因为<strong>流体的内部能量与其温度成正比</strong>。当你给他们添加能量时，水和空气升温！</p>
+<p>我们用<strong>表面温度来</strong>表征E，主要是因为大部分的热容都在海洋中。</p>
+<p>现在我们收支是</p>
+<div class="math">
+<p><img src="_images/math/c2bfd76e7ac16f6c317576ee7a05c4b5b615ee2b.png" alt="\begin{equation*}
+C\frac{dT_s}{dt} = (1-\alpha)Q-\sigma T_e^4
+\end{equation*}"/></p>
+</div><p>当ASR = OLR，时间导数为零，<strong>气候系统是平衡的</strong>。</p>
+<p>当辐射温度精确为</p>
+<div class="math">
+<p><img src="_images/math/82e985719b5db3f31108ab8670c7ce524047f835.png" alt="\begin{equation*}
+\overline{T_e}=\left(\frac{(1-\alpha)Q}{\sigma}\right)^{\frac{1}{4}}
+\end{equation*}"/></p>
+</div><p>这是成立的，其中上划线表示平衡。</p>
+<p>放进我们观测收支的数，我们发现<img class="math" src="_images/math/feaf22e506929c848e618dc4c048329b09ebc9d7.png" alt="\overline{T_e}=-255K"/> -
+如果地球作为黑体在温度255K处辐射，全球能量收支平衡，表面温度没有变化。 -
+如果地球在较高[较低]黑体温度辐射，大气-海洋系统将失去[得到]能量，表面温度将降低[增加]。</p>
+<p>注意我们依赖时间的收支是一个包含两个未知数，<img class="math" src="_images/math/a9768475a0024f74567dfa3db0f51240f0479382.png" alt="T_s"/>和<img class="math" src="_images/math/f5339fd8776a3b7a951bfacc10f6c264c2722ca6.png" alt="T_e"/>，的单一方程。</p>
+<p>为此，我们将假定<img class="math" src="_images/math/afce44aa7c55836ca9345404c22fc7b599d2ed84.png" alt="C"/>，<img class="math" src="_images/math/877d234f4cec6974ce218fc2e975a486a7972dfd.png" alt="\alpha"/>和<img class="math" src="_images/math/331157c6afbd113256867fd408d80277d1a24756.png" alt="Q"/>都是固定的——尽管在整个课程中我们将讨论这些项变化的原因。</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="02 Solving the zero-dimensional EBM.html" class="btn btn-neutral float-right" title="第2课：求解零维能量平衡模式" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Welcome to Climate Modeling’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Fanghua Wu.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

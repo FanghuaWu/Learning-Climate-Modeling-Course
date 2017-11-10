@@ -1,0 +1,1104 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>第3课：气候敏感度和反馈 &mdash; Climate Modeling 0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Climate Modeling 0.0 documentation" href="index.html"/>
+        <link rel="prev" title="第2课：求解零维能量平衡模式" href="02 Solving the zero-dimensional EBM.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Climate Modeling
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01 Planetary energy budget.html">第1课：行星能量收支</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02 Solving the zero-dimensional EBM.html">第2课：求解零维能量平衡模式</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第3课：气候敏感度和反馈</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#前言">前言</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#1.-反馈概念">1. 反馈概念</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#两个经典例子：">两个经典例子：</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#水汽反馈">水汽反馈</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#海冰-反照率反馈">海冰-反照率反馈</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#2.-气候反馈：一些定义">2. 气候反馈：一些定义</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#反馈因子：扰动能量收支的线性化">反馈因子：扰动能量收支的线性化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#反馈分解为几项">反馈分解为几项</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#3.-对于零维能量平衡模式计算">3. 对于零维能量平衡模式计算<img class="math" src="_images/math/76f1d8ace30435987c01a00ca53a71cba1f40e6c.png" alt="\lambda"/></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#这意味什么？">这意味什么？</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#每个气候模式有一个普朗克反馈">每个气候模式有一个普朗克反馈</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#4.-气候敏感度">4. 气候敏感度</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#这是一个很好的估计？">这是一个很好的估计？</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#5.-来自复杂气候模式的反馈诊断">5. 来自复杂气候模式的反馈诊断</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#来自IPCC-AR5的数据">来自IPCC AR5的数据</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#6.-零维模式变化反照率的反馈分析">6. 零维模式变化反照率的反馈分析</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#模型">模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#反馈分析">反馈分析</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#在Python中编写模型">在Python中编写模型</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#图形解：TOA通量作为温度的函数">图形解：TOA通量作为温度的函数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#得到三个平衡态温度的数值解">得到三个平衡态温度的数值解</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#邻近两两平衡态间的反馈分析">邻近两两平衡态间的反馈分析</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#反馈分析的结果">反馈分析的结果</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#净正反馈意味什么？">净正反馈意味什么？</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Climate Modeling</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>第3课：气候敏感度和反馈</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/03 Climate Sensitivity and Feedback.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-bold { font-weight: bold; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="第3课：气候敏感度和反馈">
+<h1>第3课：气候敏感度和反馈<a class="headerlink" href="#第3课：气候敏感度和反馈" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="前言">
+<h2>前言<a class="headerlink" href="#前言" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>关于之前课后作业的问题和讨论<ul>
+<li>零维EBM</li>
+<li>指数张弛</li>
+<li>逐步将模型转到平衡态</li>
+<li>具有冰反照率反馈的多重均衡</li>
+</ul>
+</li>
+<li>阅读分配：<ul>
+<li>每个人都需要阅读“气候模型入门（第四版）”第一章和第二章</li>
+<li>它现在在科学图书馆储备</li>
+<li>尽快阅读，但绝对在中期考试之前</li>
+</ul>
+</li>
+<li>讨论IPython笔记本的使用</li>
+</ul>
+</div>
+<div class="section" id="1.-反馈概念">
+<h2>1. 反馈概念<a class="headerlink" href="#1.-反馈概念" title="Permalink to this headline">¶</a></h2>
+<p>从电气工程中借鉴的一个概念。大家可能都听过或曾经使用这个术语，但我们今天会尝试更精确的方法。</p>
+<p>当系统的一部分输出被添加到输入并随后改变输出时，就会发生反馈：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="n">Image</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;./image/feedback_sketch.png&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="_images/03_Climate_Sensitivity_and_Feedback_3_0.png" src="_images/03_Climate_Sensitivity_and_Feedback_3_0.png" />
+</div>
+</div>
+<p>循环系统的结果可以是放大或衰减过程，这取决于循环中获得的符号。</p>
+<p>我们将称放大反馈为<strong>正反馈</strong>和削弱反馈为<strong>负反馈</strong>。</p>
+<p>我们可以把这里的“过程”看作是整个气候系统，它包含许多正反馈和负反馈的例子。</p>
+<div class="section" id="两个经典例子：">
+<h3>两个经典例子：<a class="headerlink" href="#两个经典例子：" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="水汽反馈">
+<h4>水汽反馈<a class="headerlink" href="#水汽反馈" title="Permalink to this headline">¶</a></h4>
+<p>保持水汽（饱和比湿）的大气容量随着温度呈指数增长。因此，变暖伴随着湿润（更多的水汽），由于水蒸气温室效应的增强，导致变暖。</p>
+<p><strong>正反馈还是负反馈？</strong></p>
+</div>
+<div class="section" id="海冰-反照率反馈">
+<h4>海冰-反照率反馈<a class="headerlink" href="#海冰-反照率反馈" title="Permalink to this headline">¶</a></h4>
+<p>较冷的气温导致冰雪覆盖的地区扩张，这往往比水和植被反射更多。这导致吸收的太阳辐射减少，这导致更多的冷却。</p>
+<p><strong>正反馈还是负反馈？</strong></p>
+<p>确保清楚的是，无论我们是在谈论变暖还是降温，反馈的标志都是一样的。</p>
+</div>
+</div>
+</div>
+<div class="section" id="2.-气候反馈：一些定义">
+<h2>2. 气候反馈：一些定义<a class="headerlink" href="#2.-气候反馈：一些定义" title="Permalink to this headline">¶</a></h2>
+<p>让我们回到<strong>行星能量收支</strong>的概念：</p>
+<div class="math">
+<p><img src="_images/math/be7f4b273e509bd4b121ce3873c218b577695065.png" alt="\begin{equation*}
+C\frac{\frac{dT_{s}}{dt}}{}=F_{TOA}
+\end{equation*}"/></p>
+</div><p>这里</p>
+<div class="math">
+<p><img src="_images/math/ea43b25146a04b54962760166f021f5b27256d76.png" alt="\begin{equation*}
+F_{TOA}=(1-\alpha)Q-\sigma T_{e}^{4}
+\end{equation*}"/></p>
+</div><p>是大气层顶<strong>净向下能量通量</strong>。</p>
+<p>因此当行星出于平衡状态，我们有<img class="math" src="_images/math/008e61a06f7baad13fe4caf568db1061674cdae8.png" alt="d/dt=0"/>，或进来的太阳能=出去的长波。</p>
+<p>假设我们通过增加一些额外的能量来改变气候，可能是由于温室气体的增加或者反射性气溶胶的减少。把这个额外的能量称为<strong>辐射强迫</strong>，用单位为<img class="math" src="_images/math/3497794fcc5e9a7c23ae2391634a57a94ed844ff.png" alt="W m^{-2}"/>的R表示。</p>
+<p>气候变化将受制于</p>
+<div class="math">
+<p><img src="_images/math/e628cff4622008858450db230ceb325579416b3c.png" alt="\begin{equation*}
+C\frac{d\Delta T_{s}}{dt}=R+\Delta F_{TOA}
+\end{equation*}"/></p>
+</div><p>这里<img class="math" src="_images/math/4a415afea33c4bad80644d12f91469cd8a6800e1.png" alt="\Delta T_{s}"/>为全球平均表面温度的变化。这个收支解释了<img class="math" src="_images/math/888dd247dcda647f96a1d8709bfc7b466c516964.png" alt="T_{s}"/>的两类变化：
+- 由于辐射强迫：R -
+由于辐射过程变化（内部对气候系统）导致：<img class="math" src="_images/math/67bf96dde9f7f98ffa7c56be1022a6184db80ca0.png" alt="\Delta F_{TOA}"/></p>
+<div class="section" id="反馈因子：扰动能量收支的线性化">
+<h3>反馈因子：扰动能量收支的线性化<a class="headerlink" href="#反馈因子：扰动能量收支的线性化" title="Permalink to this headline">¶</a></h3>
+<p>气候反馈分析的<strong>重要假定</strong>是辐射通量的变化正比于表面温度的变化：</p>
+<div class="math">
+<p><img src="_images/math/30e141c237baec0dc3ed5e8e55d0b9b82c639d88.png" alt="\begin{equation*}
+\Delta F_{TOA}=\lambda\Delta T_{s}
+\end{equation*}"/></p>
+</div><p>这里<img class="math" src="_images/math/76f1d8ace30435987c01a00ca53a71cba1f40e6c.png" alt="\lambda"/>是比例常数，单位为<img class="math" src="_images/math/4a7df953adad198b2b1a222d09b0d608527c2c8a.png" alt="W m^{-2} K^{-1}"/>。</p>
+<p>在数学上，我们假设变化足够小，以至于我们可以将关于平衡状态的收支性化（正如我们之前对零维能量平衡模式分析所做的那样）。</p>
+<p>使用一阶泰勒级数展开法，<img class="math" src="_images/math/76f1d8ace30435987c01a00ca53a71cba1f40e6c.png" alt="\lambda"/>的一般定义就是这样</p>
+<div class="math">
+<p><img src="_images/math/5c008f71588ec63c7468ec73849281946bdaaf26.png" alt="\begin{equation*}
+\lambda=\frac{\partial}{\partial T_{s}}\left(\Delta F_{TOA}\right)
+\end{equation*}"/></p>
+</div><p>则扰动温度的收支为</p>
+<div class="math">
+<p><img src="_images/math/4fe550c850af562ed9eab41950eb69328e0d8722.png" alt="\begin{equation*}
+C\frac{d\Delta T}{dt}=R+\lambda\Delta T_{s}
+\end{equation*}"/></p>
+</div><p>我们称<img class="math" src="_images/math/76f1d8ace30435987c01a00ca53a71cba1f40e6c.png" alt="\lambda"/>为<strong>气候反馈参数</strong>。</p>
+<p>我们需要气候模式的一个关键问题是：</p>
+<p>给定的辐射强迫我们预期会变暖多少？</p>
+<p>或者更明确地说，如果我们把大气中的二氧化碳浓度加倍（我们将在后面看到，这会产生大约<img class="math" src="_images/math/1ad8127da1dc7d4ad83943432a93f7d71672c249.png" alt="4 W m^{-2}"/>的辐射强迫），会有多大的变暖。</p>
+<p>如果有足够的时间，系统将达到新的平衡温度，在这点</p>
+<div class="math">
+<p><img src="_images/math/88b3b79beda54226ab6b57bb8330c29b309da8bc.png" alt="\begin{equation*}
+\frac{d\Delta T_{s}}{dt}=0
+\end{equation*}"/></p>
+</div><p>因此扰动收支为</p>
+<div class="math">
+<p><img src="_images/math/0aca5f6784afdb71b5283abc21f92d63e5e0034f.png" alt="\begin{equation*}
+0=R+\lambda\Delta T_{s}
+\end{equation*}"/></p>
+</div><p>或</p>
+<div class="math">
+<p><img src="_images/math/d14f13d4d41595837b0d00b9c4f17239725e39c8.png" alt="\begin{equation*}
+\Delta T_{s}=-\frac{R}{\lambda}
+\end{equation*}"/></p>
+</div><p>这里<img class="math" src="_images/math/a00254b18ffa992f0ef19f6e6e095b83c8f85e94.png" alt="R"/>为单位<img class="math" src="_images/math/3497794fcc5e9a7c23ae2391634a57a94ed844ff.png" alt="W m^{-2}"/>的强迫，<img class="math" src="_images/math/76f1d8ace30435987c01a00ca53a71cba1f40e6c.png" alt="\lambda"/>为单位<img class="math" src="_images/math/4a7df953adad198b2b1a222d09b0d608527c2c8a.png" alt="W m^{-2} K^{-1}"/>的反馈。</p>
+<p>请注意，我们尚未为辐射排放调用特定模型（尚未）。这是一个非常普遍的概念，我们可以应用于任何气候模型。</p>
+<p>我们已经在这里定义了这样的事情：对于<strong>正反馈</strong>，<img class="math" src="_images/math/5831214b5e489a86ddc202d723eaf7939dddef5e.png" alt="\lambda&gt;0"/>，对于<strong>负反馈</strong>，<img class="math" src="_images/math/ee9a60b1139dbde3a69d1d4181db59c5b33f6e28.png" alt="\lambda&lt;0"/>。这很方便！</p>
+</div>
+<div class="section" id="反馈分解为几项">
+<h3>反馈分解为几项<a class="headerlink" href="#反馈分解为几项" title="Permalink to this headline">¶</a></h3>
+<p>另一个要注意到的事情，我们可以将总的气候反馈根据不同过程分解为几项：</p>
+<div class="math">
+<p><img src="_images/math/5041ab089abf49e2a6d2e2c974c030dab20e4cb9.png" alt="\begin{equation*}
+\lambda=\lambda_{0}+\lambda_{1}+\lambda_{2}+...=\sum_{i=0}^{n}{\lambda_{i}}
+\end{equation*}"/></p>
+</div><p>这是可能的因为我们的线性假定取决于<img class="math" src="_images/math/4a415afea33c4bad80644d12f91469cd8a6800e1.png" alt="\Delta T_{s}"/>。</p>
+<p>例如，我们可以分解净气候反馈为： - 长波和短波过程 - 云和非云过程</p>
+<p>这些单独反馈过程可正可负。这是非常强大的，因为我们可以简单地通过比较它们的<img class="math" src="_images/math/03fb95641efd224604d31e10ad0d43f2a1981cfe.png" alt="\lambda_{i}"/>值来测量不同反馈过程的相对重要性。</p>
+<p>让我们保留符号<img class="math" src="_images/math/76f1d8ace30435987c01a00ca53a71cba1f40e6c.png" alt="\lambda"/>来表示整体或净气候反馈，并使用下标表示具体的反馈过程。</p>
+<p>问题：<img class="math" src="_images/math/76f1d8ace30435987c01a00ca53a71cba1f40e6c.png" alt="\lambda"/>的符号是什么？</p>
+<p>对于正的<img class="math" src="_images/math/76f1d8ace30435987c01a00ca53a71cba1f40e6c.png" alt="\lambda"/>的行星有能量平衡吗？考虑一下你的经验求解能量收支方程。</p>
+</div>
+</div>
+<div class="section" id="3.-对于零维能量平衡模式计算">
+<h2>3. 对于零维能量平衡模式计算<img class="math" src="_images/math/76f1d8ace30435987c01a00ca53a71cba1f40e6c.png" alt="\lambda"/><a class="headerlink" href="#3.-对于零维能量平衡模式计算" title="Permalink to this headline">¶</a></h2>
+<p>我们的原型气候模型是零维EBM</p>
+<div class="math">
+<p><img src="_images/math/c5ea7d2f09bbfec041133f75983a771c08b921e3.png" alt="\begin{equation*}
+C\frac{dT_{s}}{dt}=(1-\alpha)Q-\sigma(\beta T_{s})^{4}
+\end{equation*}"/></p>
+</div><p>这里<img class="math" src="_images/math/410a9d0df9c135dd73b269cba7ef04dcfd932b1f.png" alt="\beta"/>是测量表面温度和辐射温度比值的参数。从观测我们估算</p>
+<div class="math">
+<p><img src="_images/math/5042cd44128ddcf2e1bd35e939bced6bf7bc5681.png" alt="\begin{equation*}
+\beta=255/288=0.885
+\end{equation*}"/></p>
+</div><p>现在我们增加一个入射强迫到模式：</p>
+<div class="math">
+<p><img src="_images/math/37e7816bdfdb794b016296b9d80676ceaadd05d7.png" alt="\begin{equation*}
+C\frac{dT_{s}}{dt}=(1-\alpha)Q-\sigma(\beta T_{s})^{4}+R
+\end{equation*}"/></p>
+</div><p>在之前的课程中我们看到可以使用一阶泰勒展开将参考温度<img class="math" src="_images/math/ae2cff0ae077daaccae41754d5a1de338ac61f99.png" alt="\bar{T_{s}}"/>表示为</p>
+<div class="math">
+<p><img src="_images/math/e9fe8adc393b61dc3108cfdd547b6acc1f4426fc.png" alt="\begin{equation*}
+C\frac{dT_{s}}{dt}=R+\lambda\Delta T_{s}
+\end{equation*}"/></p>
+</div><p>比率常数</p>
+<div class="math">
+<p><img src="_images/math/7d07c2a57c14add996f053dffc7b6dafe818f689.png" alt="\begin{equation*}
+\lambda=-\left(4\sigma\beta^{4}\bar{T_{s}}^{3}\right)
+\end{equation*}"/></p>
+</div><p>这里，根据我们刚刚介绍的术语，这个模型是净气候反馈。</p>
+<p>按观测的全球平均温度288K和采用我们调整<img class="math" src="_images/math/410a9d0df9c135dd73b269cba7ef04dcfd932b1f.png" alt="\beta"/>值估算<img class="math" src="_images/math/76f1d8ace30435987c01a00ca53a71cba1f40e6c.png" alt="\lambda"/>为</p>
+<div class="math">
+<p><img src="_images/math/0563fd45c701670c5b3be792202491296745396f.png" alt="\begin{equation*}
+\lambda=-3.3W m^{-2}K^{-1}
+\end{equation*}"/></p>
+</div><p>请注意，在此模型中我们将反照率<img class="math" src="_images/math/877d234f4cec6974ce218fc2e975a486a7972dfd.png" alt="\alpha"/>视为固定。下面我们将推广到变化的反照率。</p>
+<div class="section" id="这意味什么？">
+<h3>这意味什么？<a class="headerlink" href="#这意味什么？" title="Permalink to this headline">¶</a></h3>
+<p>这意味着，对于我们投入系统的每<img class="math" src="_images/math/3497794fcc5e9a7c23ae2391634a57a94ed844ff.png" alt="W m^{-2}"/>的能量的W m
+-2-2，我们的模型预测表面温度必须增加:math:<cite>-1/lambda=0.3 K</cite>才能重新建立行星能量平衡。</p>
+<p>这个模型只代表一个<strong>单一的反馈过程</strong>：随着地表变暖，发射到空间的长波增加。</p>
+<p>这被称为<strong>普朗克反馈</strong>，因为它基本上是由于普朗克黑体辐射定律（温度较高=较高的辐射）。</p>
+<p>这里和以后我们将用<img class="math" src="_images/math/3861847b0593bbf62aaa0bacf10846355e4a9b9b.png" alt="\lambda_{0}"/>表示这个反馈。为了清楚，我们正在说这个特定的气候模型</p>
+<div class="math">
+<p><img src="_images/math/9f9875c510ef442abc98d5fd24ef735ad8de7dd5.png" alt="\begin{equation*}
+\lambda=\lambda_{0}=-\left(4\sigma\beta^{4}\bar{T_{s}}^{3}\right)
+\end{equation*}"/></p>
+</div></div>
+<div class="section" id="每个气候模式有一个普朗克反馈">
+<h3>每个气候模式有一个普朗克反馈<a class="headerlink" href="#每个气候模式有一个普朗克反馈" title="Permalink to this headline">¶</a></h3>
+<p>普朗克反馈是最基本和最普遍的气候反馈，存在于每个气候模式中。这仅仅是一个事实的表达，一个温暖的行星比一个冷的行星向太空辐射更多。</p>
+<p>正如我们将看到的，我们对<img class="math" src="_images/math/7edca3d2735d04950c63f6dc5ead7964a4fcfbb6.png" alt="\lambda_{0}=-3.3W m^{-2} K^{-1}"/>的估计基本上与从复杂GCM诊断的普朗克反馈相同。与我们简单的零维模型不同，大多数其他的气候模式（和真实的气候系统）都有其他的辐射过程，例如<img class="math" src="_images/math/197be88d06def157f83af047354e78eceeca880e.png" alt="\lambda\ne\lambda_{0}"/>。</p>
+</div>
+</div>
+<div class="section" id="4.-气候敏感度">
+<h2>4. 气候敏感度<a class="headerlink" href="#4.-气候敏感度" title="Permalink to this headline">¶</a></h2>
+<p>现在定义另一个重要项： <strong>平衡气候敏感度（Equilibtrium Climate
+Sensitivity(ECS)）</strong>（指平衡全球平均温度对大气中<img class="math" src="_images/math/eafe545a25023b5dde8378204677d11f69df10ef.png" alt="CO_{2}"/>浓度相对于工业化前加倍的响应。）：大气<img class="math" src="_images/math/eafe545a25023b5dde8378204677d11f69df10ef.png" alt="CO_{2}"/>加倍后，为了平衡行星能量收支所需的全球平均地表变化。</p>
+<p>我们将这个温度写为<img class="math" src="_images/math/83e673becf77c4694588bf5b072b04c3e7c329ea.png" alt="\Delta T_{2\times CO_{2}}"/>。</p>
+<p>ECS是一个重要的数。气候模拟的一个主要目标是提供ECS及其不确定性的更好估算。</p>
+<p>对于我们的零维模式估算ECS。我们知道对于任何给定强迫<img class="math" src="_images/math/a00254b18ffa992f0ef19f6e6e095b83c8f85e94.png" alt="R"/>增暖为</p>
+<div class="math">
+<p><img src="_images/math/d14f13d4d41595837b0d00b9c4f17239725e39c8.png" alt="\begin{equation*}
+\Delta T_{s}=-\frac{R}{\lambda}
+\end{equation*}"/></p>
+</div><p>为了计算<img class="math" src="_images/math/83e673becf77c4694588bf5b072b04c3e7c329ea.png" alt="\Delta T_{2\times CO_{2}}"/>，我们需要知道来自加倍<img class="math" src="_images/math/eafe545a25023b5dde8378204677d11f69df10ef.png" alt="CO_{2}"/>的辐射强迫，其表示为<img class="math" src="_images/math/163e00acb1bbf636050c158cb7b8306ed4198710.png" alt="R_{2\times CO_{2}}"/>。我们稍后会在这个学期花一些时间来看这个数量。现在，我们只需要一个合理值</p>
+<div class="math">
+<p><img src="_images/math/b5d5d9d05c6c82f584719bc8baf22be123c50cc0.png" alt="\begin{equation*}
+R_{2\times {CO_{2}}} \approx 4Wm^{-2}
+\end{equation*}"/></p>
+</div><p>我们对ECS的估计直接遵循：</p>
+<div class="math">
+<p><img src="_images/math/cda8ac8fda8867a98da9fa9d7bc7f36597758015.png" alt="\begin{equation*}
+\Delta T_{2\times {CO_{2}}}=-\frac{R_{2\times {CO_{2}}}}{\lambda}=-\frac{4 W m^{-2}}{-3.3 W m^{-2} K^{-1}}=1.2K
+\end{equation*}"/></p>
+</div><div class="section" id="这是一个很好的估计？">
+<h3>这是一个很好的估计？<a class="headerlink" href="#这是一个很好的估计？" title="Permalink to this headline">¶</a></h3>
+<p><strong>什么是目前ECS的最佳估计？</strong></p>
+<p>最新的IPCC报告AR5给出的可能范围为<strong>1.5至4.5K</strong>.（这些数字有很多不确定性——我们一定会回到这个问题）</p>
+<p>所以我们最简单的简单气候模型显然<strong>低估了气候敏感度</strong>。</p>
+<p>假设真实值是<img class="math" src="_images/math/3e4a8ed04823af1625dda19cf2bf2baf64960b24.png" alt="\Delta T_{2\times CO_{2}}=3K"/>（范围的中间）。</p>
+<p>这意味着真正的净反馈是</p>
+<div class="math">
+<p><img src="_images/math/d3f4590b0d849df35c8ecf82a69a8077ec0c451c.png" alt="\begin{equation*}
+\lambda=-\frac{R_{2\times CO_{2}}}{\Delta T_{2\times CO_{2}}}=-\frac{4Wm^{-2}}{3K}=-1.3W m^{-2}K^{-1}
+\end{equation*}"/></p>
+</div><p>然后我们可以推断出“缺失”反馈的总数：</p>
+<div class="math">
+<p><img src="_images/math/efb8b5b0fcf8b1d28a99004f9f7aaac592269463.png" alt="\begin{align*}
+\lambda &amp;= \lambda_{0}+\sum_{i=1}^{n}{\lambda_{i}}\\
+-1.3Wm^{-2}K^{-1} &amp;= -3.3Wm^{-2}K^{-1} + \sum_{i=1}^{n}{\lambda_{i}}\\
+\sum_{i=1}^{n}{\lambda_{i}} &amp;= +2.0Wm^{-2}K^{-1}
+\end{align*}"/></p>
+</div><p>没有包含在我们简单模型中的所有过程的净效应是一个<strong>正反馈</strong>，它<strong>提高了平衡气候敏感度</strong>。我们的模型不能准确预测全球变暖，是因为它没有考虑到这些正反馈。</p>
+<p>（这并不意味着与每个缺失的过程相关的反馈是正反馈！只是所有缺少的反馈的线性总和是正的！</p>
+<p>这与我们上面的讨论是一致的。我们以两个例子（水汽和反照率反馈）开始了我们的反馈讨论，这两个例子都是正反馈，都没有出现在我们的模型中！</p>
+<p>我们已经看到（在作业练习中）一种将反照率反馈添加到零维模型的简单方法。我们将在下面分析这个版本的模型。但首先，我们来看看现有GCM诊断的反馈。</p>
+</div>
+</div>
+<div class="section" id="5.-来自复杂气候模式的反馈诊断">
+<h2>5. 来自复杂气候模式的反馈诊断<a class="headerlink" href="#5.-来自复杂气候模式的反馈诊断" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="来自IPCC-AR5的数据">
+<h3>来自IPCC AR5的数据<a class="headerlink" href="#来自IPCC-AR5的数据" title="Permalink to this headline">¶</a></h3>
+<p>这个数字是从最近的IPCC
+AR5报告中复制的。它显示了来自评估的各种模式的诊断反馈。</p>
+<p>（在术语的后面，我们将讨论如何实际的反馈诊断）</p>
+<p>请参阅下面的完整引用信息。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">feedback_ar5</span> <span class="o">=</span> <span class="s1">&#39;http://www.climatechange2013.org/images/figures/WGI_AR5_Fig9-43.jpg&#39;</span>
+<span class="n">Image</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">feedback_ar5</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img src="http://www.climatechange2013.org/images/figures/WGI_AR5_Fig9-43.jpg" width="800"/></div>
+</div>
+<p><strong>图9.43</strong>
+（a）CMIP3和CMIP5模型（左和右列符号）对于普朗克（P），水汽（WV），云层（C），反照率（A），递减率（LR），包含水汽和递减率（WV+LR）以及除Planck（ALL）以外的所有反馈的总和的单个反馈的强度。
+继Soden等（2008年）后Soden和Held（2006）以及Vial等人（2013）。
+CMIP5反馈源自CMIP5模拟，用于突破CO2浓度四倍增长（4×CO2）。
+（b）使用Andrews等人（2012）的回归技术获得的ECS，根据二氧化碳排放总量与所有反馈总和的比例估算。二氧化碳的ERF是Andrews等人（2012）4×CO2强迫的一半，总反馈（ALL
++ Planck）来自Vial等（2013）。</p>
+<p>图表标题从AR5 WG1报告中转载</p>
+<p>图例： - P：普朗克反馈 - WV：水汽反馈 - LR：失效率反馈 - WV +
+LR：结合水汽加上失效率反馈 - C：云端反馈 - A：表面反照率反馈 -
+ALL：除Plank以外的所有反馈的和，即ALL = WV + LR + C + A</p>
+<p>注意： - 这些模型都赞同普朗克反馈。 -
+正如我们上面的估计，普朗克反馈大约是<img class="math" src="_images/math/04fe03b645b4dd8465e92ae3662ab66d6efcf357.png" alt="\lambda_{0}=-3.3Wm^{-2}K^{-1}"/>。
+- 每个模型的水汽反馈是很强的正反馈。 -
+递减率反馈是我们稍后将研究的。这是微不足道的。 -
+由于我们稍后会讨论的原因，测量水汽反馈的最好方法是将其与递减率反馈相结合。
+- 模型强烈地同意水汽加递减率的反馈。 -
+反照率反馈略有正反馈，但相对较小。 -
+到目前为止，模型中最大的传播发生在云反馈中。 -
+全球云反馈的范围从略微负反馈到强烈正反馈。 -
+总反馈中的大部分传播是由于云反馈中的传播。 -
+因此，ECS在模型中的大部分传播是由于云反馈中的传播。 -
+我们对所有缺失过程的估计值为<img class="math" src="_images/math/c02a7cd5057292fcb067d8aa7a17ded36cef8918.png" alt="+2.0Wm^{-2}K^{-1}"/>，与GCM集合一致。</p>
+<p><strong>引用</strong> 这是来自IPCC AR5第一工作组报告第九章的图9.43。</p>
+<p>报告和图片可以在线 <a class="reference external" href="http://www.climatechange2013.org/report/full-report/">http://www.climatechange2013.org/report/full-report/</a></p>
+<p>完整引用如下:</p>
+<p>Flato, G., J. Marotzke, B. Abiodun, P. Braconnot, S.C. Chou, W. Collins,
+P. Cox, F. Driouech, S. Emori, V. Eyring, C. Forest, P. Gleckler, E.
+Guilyardi, C. Jakob, V. Kattsov, C. Reason and M. Rummukainen, 2013:
+Evaluation of Climate Models. In: Climate Change 2013: The Physical
+Science Basis. Contribution of Working Group I to the Fifth Assessment
+Report of the Intergovernmental Panel on Climate Change [Stocker, T.F.,
+D. Qin, G.-K. Plattner, M. Tignor, S.K. Allen, J. Boschung, A. Nauels,
+Y. Xia, V. Bex and P.M. Midgley (eds.)]. Cambridge University Press,
+Cambridge, United Kingdom and New York, NY, USA, pp. 741–866,
+doi:10.1017/CBO9781107415324.020</p>
+</div>
+</div>
+<div class="section" id="6.-零维模式变化反照率的反馈分析">
+<h2>6. 零维模式变化反照率的反馈分析<a class="headerlink" href="#6.-零维模式变化反照率的反馈分析" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="模型">
+<h3>模型<a class="headerlink" href="#模型" title="Permalink to this headline">¶</a></h3>
+<p>在最近的作业中，您被要求在零维EBM中包括一个新的过程：取决于温度的反照率。</p>
+<p>我们使用了以下公式：</p>
+<div class="math">
+<p><img src="_images/math/37e7816bdfdb794b016296b9d80676ceaadd05d7.png" alt="\begin{equation*}
+C\frac{dT_{s}}{dt}=(1-\alpha)Q-\sigma(\beta T_{s})^{4}+R
+\end{equation*}"/></p>
+</div><div class="math">
+<p><img src="_images/math/a5387d68381f9181073358fcfee55c323ab88bca.png" alt="\begin{equation*}
+\alpha(T_{s})=\
+\left\{
+\begin{aligned}
+&amp;\alpha_{i} &amp; T_{s}\le T_{i}\\
+&amp;\alpha_{0}+(\alpha_{i}-\alpha_{0})\frac{(T_{s}-T_{0})^{2}}{(T_{i}-T_{0})^{2}} &amp; T_{i} &lt; T_{s} &lt; T_{0}\\
+&amp;\alpha_{0}   &amp; T_{s}\ge T_{0}
+\end{aligned}
+\right\}.
+\end{equation*}"/></p>
+</div><p>具有以下参数： - <img class="math" src="_images/math/a00254b18ffa992f0ef19f6e6e095b83c8f85e94.png" alt="R"/>是单位<img class="math" src="_images/math/4b6830bb421bb6a5916b5c82d94d4c0317cd427a.png" alt="Wm^{-2}"/>的辐射强迫 -
+<img class="math" src="_images/math/a2687538574a13fba9b5996c060e5cacf95475ed.png" alt="C = 4\times 10^{8}8Jm^{-2}K^{-1}"/>是大气——海洋柱的热容量 -
+<img class="math" src="_images/math/877d234f4cec6974ce218fc2e975a486a7972dfd.png" alt="\alpha"/>是全球平均行星反照率 -
+<img class="math" src="_images/math/4698341f9d1963cd8f12cc338d85931dd097c691.png" alt="\sigma = 5.67\times 10^{-8}Wm^{-2}K^{-4}"/>是Stefan-Boltzmann常数
+- <img class="math" src="_images/math/beba96dc8a06978ef1539d4bcc8fa6109bf46217.png" alt="\beta = 0.885"/>是我们的表面温度和辐射温度之间的比例参数 -
+<img class="math" src="_images/math/4a62f1a00c902966cc45d35f4242d3bb2c835212.png" alt="Q = 341.3Wm^{-2}"/>是全球平均入射太阳辐射。 -
+<img class="math" src="_images/math/001226b1b3c96525ce5037ea2e06ddb06f4b3cd6.png" alt="\alpha_{0}=0.289"/>是一个温暖的无冰行星的反照率 -
+<img class="math" src="_images/math/aedac03f959b4fd9b432e09ae68f9dafd8a64fb1.png" alt="\alpha_{i}=0.7"/>是一个非常寒冷，完全冰覆盖的行星的反照率 -
+<img class="math" src="_images/math/f5a2eaec2a41040c9bd1a0dd3bdd673cf7e5ad40.png" alt="T_{0} = 293K"/>是我们的模型假定行星无冰的阈值温度 -
+<img class="math" src="_images/math/e8830d1800019134a3a0083876307c20017f1727.png" alt="T_{i} = 260K"/>是阈值温度，在此温度以下，我们的模型假定行星完全被冰覆盖。</p>
+<p>正如你在作业中发现的那样，这个模型有<strong>多重平衡态</strong>。对于上面列出的参数，有三个平衡态。温暖的（今天的）解和完全冰覆盖的解都是稳定的平衡态。有一个中间解是不稳定的平衡态。</p>
+</div>
+<div class="section" id="反馈分析">
+<h3>反馈分析<a class="headerlink" href="#反馈分析" title="Permalink to this headline">¶</a></h3>
+<p>在这个模型中，反照率不是固定的，而是取决于温度。因此，它会随最初的变暖或冷却而改变。一个反馈！</p>
+<p>现在这个模型的净气候反馈</p>
+<div class="math">
+<p><img src="_images/math/a7418dc0e33564f4068c15b4380679e5f5dc63c0.png" alt="\begin{equation*}
+\lambda = \lambda_{0}+\lambda_{\alpha}
+\end{equation*}"/></p>
+</div><p>我们将反照率贡献表示为<img class="math" src="_images/math/e9594fa7aae0d634b861fa2f2d8177e07016d4f7.png" alt="\lambda_{\alpha}"/>。</p>
+<p>普朗克反馈不变：<img class="math" src="_images/math/04fe03b645b4dd8465e92ae3662ab66d6efcf357.png" alt="\lambda_{0}=-3.3Wm^{-2}K^{-1}"/>。</p>
+<p>为了计算<img class="math" src="_images/math/e9594fa7aae0d634b861fa2f2d8177e07016d4f7.png" alt="\lambda_{\alpha}"/>，我们需要<strong>线性化反照率函数</strong>。像其他任何线性化一样，我们使用泰勒展开式，必须采取一阶导数：</p>
+<div class="math">
+<p><img src="_images/math/610e23060b03c469733d7822501d60b65943c34c.png" alt="\begin{align*}
+\Delta F_{TOA} = \lambda\Delta T_{s} = (\lambda_{0}+\lambda_{\alpha})\Delta T_{s}\\
+\lambda_{0}=-\left(4\sigma\beta^{4}\bar{T_{s}}^{3}\right)\\
+\lambda_{\alpha}=\frac{d}{dT_{s}}\left((1-\alpha)Q\right)=-Q\frac{d\alpha}{dT_{s}}
+\end{align*}"/></p>
+</div><p>使用上述定义的反照率函数，我们得到</p>
+<div class="math">
+<p><img src="_images/math/b6a9f4fcdc0f1199afc02348ed17a244ddc55a22.png" alt="\begin{equation*}
+\lambda_{\alpha}=-Q\
+\left\{
+\begin{aligned}
+&amp;0 &amp; T_{s}\le T_{i}\\
+&amp;2(\alpha_{i}-\alpha_{0})\frac{(T_{s}-T_{0})^{2}}{(T_{i}-T_{0})^{2}} &amp; T_{i} &lt; T_{s} &lt; T_{0}\\
+&amp;0   &amp; T_{s}\ge T_{0}
+\end{aligned}
+\right\}.
+\end{equation*}"/></p>
+</div><p>请注意，我们刚刚计算的反馈不是恒定的，而是取决于气候系统的状态（即表面温度）。</p>
+</div>
+<div class="section" id="在Python中编写模型">
+<h3>在Python中编写模型<a class="headerlink" href="#在Python中编写模型" title="Permalink to this headline">¶</a></h3>
+<p>这在很大程度上重复了我要求你做的功课。</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">albedo</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">alpha_o</span> <span class="o">=</span> <span class="mf">0.289</span><span class="p">,</span> <span class="n">alpha_i</span> <span class="o">=</span> <span class="mf">0.7</span><span class="p">,</span> <span class="n">To</span> <span class="o">=</span> <span class="mf">293.</span><span class="p">,</span> <span class="n">Ti</span> <span class="o">=</span> <span class="mf">260.</span><span class="p">):</span>
+    <span class="n">alb1</span> <span class="o">=</span> <span class="n">alpha_o</span> <span class="o">+</span> <span class="p">(</span><span class="n">alpha_i</span><span class="o">-</span><span class="n">alpha_o</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">T</span><span class="o">-</span><span class="n">To</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">Ti</span> <span class="o">-</span> <span class="n">To</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">alb2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">T</span><span class="o">&gt;</span><span class="n">Ti</span><span class="p">,</span> <span class="n">alb1</span><span class="p">,</span> <span class="n">alpha_i</span><span class="p">)</span>
+    <span class="n">alb3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">T</span><span class="o">&lt;</span><span class="n">To</span><span class="p">,</span> <span class="n">alb2</span><span class="p">,</span> <span class="n">alpha_o</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">alb3</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">ASR</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">Q</span><span class="o">=</span><span class="mf">341.3</span><span class="p">):</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">albedo</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Q</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">OLR</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">5.67E-8</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.885</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">sigma</span> <span class="o">*</span> <span class="p">(</span><span class="n">beta</span><span class="o">*</span><span class="n">T</span><span class="p">)</span><span class="o">**</span><span class="mi">4</span>
+
+<span class="k">def</span> <span class="nf">Ftoa</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">ASR</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">-</span> <span class="n">OLR</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">220.</span><span class="p">,</span> <span class="mf">300.</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">albedo</span><span class="p">(</span><span class="n">T</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Temperature (K)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;albedo&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Albedo as a function of global mean temperature&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[11]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.text.Text at 0x10f597c10&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/03_Climate_Sensitivity_and_Feedback_24_1.png" src="_images/03_Climate_Sensitivity_and_Feedback_24_1.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="图形解：TOA通量作为温度的函数">
+<h2>图形解：TOA通量作为温度的函数<a class="headerlink" href="#图形解：TOA通量作为温度的函数" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">OLR</span><span class="p">(</span><span class="n">T</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;OLR&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">ASR</span><span class="p">(</span><span class="n">T</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;ASR&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">Ftoa</span><span class="p">(</span><span class="n">T</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Ftoa&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Surface temperature (K)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;TOA flux (W m$^{-2}$)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[12]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.legend.Legend at 0x10f7e2910&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/03_Climate_Sensitivity_and_Feedback_26_1.png" src="_images/03_Climate_Sensitivity_and_Feedback_26_1.png" />
+</div>
+</div>
+<div class="section" id="得到三个平衡态温度的数值解">
+<h3>得到三个平衡态温度的数值解<a class="headerlink" href="#得到三个平衡态温度的数值解" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># Use numerical root-finding to get the equilibria</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">brentq</span>
+<span class="c1"># brentq is a root-finding function</span>
+<span class="c1">#  Need to give it a function and two end-points</span>
+<span class="c1">#  It will look for a zero of the function between those end-points</span>
+<span class="n">Teq1</span> <span class="o">=</span> <span class="n">brentq</span><span class="p">(</span><span class="n">Ftoa</span><span class="p">,</span> <span class="mf">280.</span><span class="p">,</span> <span class="mf">300.</span><span class="p">)</span>
+<span class="n">Teq2</span> <span class="o">=</span> <span class="n">brentq</span><span class="p">(</span><span class="n">Ftoa</span><span class="p">,</span> <span class="mf">260.</span><span class="p">,</span> <span class="mf">280.</span><span class="p">)</span>
+<span class="n">Teq3</span> <span class="o">=</span> <span class="n">brentq</span><span class="p">(</span><span class="n">Ftoa</span><span class="p">,</span> <span class="mf">200.</span><span class="p">,</span> <span class="mf">260.</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">Teq1</span><span class="p">,</span> <span class="n">Teq2</span><span class="p">,</span> <span class="n">Teq3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(288.07486360356785, 273.9423668460388, 232.92995904643783)
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="邻近两两平衡态间的反馈分析">
+<h3>邻近两两平衡态间的反馈分析<a class="headerlink" href="#邻近两两平衡态间的反馈分析" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">lambda_0</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.885</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">5.67E-8</span><span class="p">):</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">4</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">beta</span><span class="o">**</span><span class="mi">4</span> <span class="o">*</span> <span class="n">T</span><span class="o">**</span><span class="mi">3</span>
+
+<span class="k">def</span> <span class="nf">lambda_alpha</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">Q</span><span class="o">=</span><span class="mf">341.3</span><span class="p">,</span> <span class="n">alpha_o</span> <span class="o">=</span> <span class="mf">0.289</span><span class="p">,</span> <span class="n">alpha_i</span> <span class="o">=</span> <span class="mf">0.7</span><span class="p">,</span>
+                 <span class="n">To</span> <span class="o">=</span> <span class="mf">293.</span><span class="p">,</span> <span class="n">Ti</span> <span class="o">=</span> <span class="mf">260.</span><span class="p">):</span>
+    <span class="n">lam1</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">alpha_i</span><span class="o">-</span><span class="n">alpha_o</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">T</span><span class="o">-</span><span class="n">To</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">Ti</span> <span class="o">-</span> <span class="n">To</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">lam2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">T</span><span class="o">&gt;</span><span class="n">Ti</span><span class="p">,</span> <span class="n">lam1</span><span class="p">,</span> <span class="mf">0.</span><span class="p">)</span>
+    <span class="n">lam3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">T</span><span class="o">&lt;</span><span class="n">To</span><span class="p">,</span> <span class="n">lam2</span><span class="p">,</span> <span class="mf">0.</span><span class="p">)</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">Q</span> <span class="o">*</span> <span class="n">lam3</span>
+</pre></div>
+</div>
+</div>
+<p>在这里，我们将循环通过每个平衡态温度并计算这些温度的反馈因子。</p>
+<p>此代码还显示了如何使用打印功能完成合适的数字输出的示例。格式字符串{:.1f}表示浮点数四舍五入到小数点后一位。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="k">for</span> <span class="n">Teq</span> <span class="ow">in</span> <span class="p">(</span><span class="n">Teq1</span><span class="p">,</span> <span class="n">Teq2</span><span class="p">,</span> <span class="n">Teq3</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Equilibrium temperature: {:.1f} K&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Teq</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;   Planck feedback: {:.1f}  W/m2/K&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lambda_0</span><span class="p">(</span><span class="n">Teq</span><span class="p">)))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;   Albedo feedback: {:.1f}  W/m2/K&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lambda_alpha</span><span class="p">(</span><span class="n">Teq</span><span class="p">)))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;         Net feedback: {:.1f} W/m2/K&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">lambda_0</span><span class="p">(</span><span class="n">Teq</span><span class="p">)</span> <span class="o">+</span> <span class="n">lambda_alpha</span><span class="p">(</span><span class="n">Teq</span><span class="p">))))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Equilibrium temperature: 288.1 K
+   Planck feedback: -3.3  W/m2/K
+   Albedo feedback: 1.3  W/m2/K
+         Net feedback: -2.1 W/m2/K
+Equilibrium temperature: 273.9 K
+   Planck feedback: -2.9  W/m2/K
+   Albedo feedback: 4.9  W/m2/K
+         Net feedback: 2.0 W/m2/K
+Equilibrium temperature: 232.9 K
+   Planck feedback: -1.8  W/m2/K
+   Albedo feedback: -0.0  W/m2/K
+         Net feedback: -1.8 W/m2/K
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="反馈分析的结果">
+<h3>反馈分析的结果<a class="headerlink" href="#反馈分析的结果" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>普朗克反馈总是负反馈，但是在非常寒冷的温度下，绝对值变弱了。</li>
+<li>该模型中的反照率反馈强烈依赖于系统的状态。</li>
+<li>在中间解<img class="math" src="_images/math/2c1b48c9f64a992ff640713ccc4f2e8128857137.png" alt="T_{s}=273.9K"/>时，反照率反馈强烈为正反馈。</li>
+<li>在这个中间温度下净反馈是正反馈。</li>
+<li>在温暖和寒冷的温度下，净反馈是负反馈。</li>
+</ul>
+</div>
+<div class="section" id="净正反馈意味什么？">
+<h3>净正反馈意味什么？<a class="headerlink" href="#净正反馈意味什么？" title="Permalink to this headline">¶</a></h3>
+<p>回想一下线性模型的分析解决方案，温度将根据</p>
+<div class="math">
+<p><img src="_images/math/c4e0167bbb6df3cb2e0ca8cd4d44e948eb320d13.png" alt="\begin{equation}
+\Delta T_{s}(t)=\Delta T_{s}(0)exp\left(-\frac{t}{\tau}\right)
+\end{equation}"/></p>
+</div><p>时间尺度为</p>
+<div class="math">
+<p><img src="_images/math/0346f08239ece2d64c5cbd230dafc46964785a15.png" alt="\begin{equation}
+\tau=\frac{C}{-\lambda}
+\end{equation}"/></p>
+</div><p>在<img class="math" src="_images/math/2c1b48c9f64a992ff640713ccc4f2e8128857137.png" alt="T_{s}=273.9K"/>附近，由于非常强的反照率反馈，我们发现<img class="math" src="_images/math/5831214b5e489a86ddc202d723eaf7939dddef5e.png" alt="\lambda&gt;0"/>。因此在这种情况下<img class="math" src="_images/math/3d49ac40a3b1e4377afb9ee8b88c86b0dde76d61.png" alt="\tau&lt;0"/>，我们正在处理温度异常的<strong>指数增长</strong>而不是指数衰减。</p>
+<p>换句话说，如果全球平均温度接近（但不是完全）这个值：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="k">print</span><span class="p">(</span><span class="n">Teq2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+273.942366846
+</pre></div></div>
+</div>
+<p>气候系统将快速升温或降温。温度不会接近<img class="math" src="_images/math/2c1b48c9f64a992ff640713ccc4f2e8128857137.png" alt="T_{s}=273.9K"/>。这是一个不稳定平衡的例子。</p>
+<p>扰动后系统的最终状态将是稳定的平衡态之一：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="k">print</span><span class="p">(</span><span class="n">Teq1</span><span class="p">,</span> <span class="n">Teq3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(288.07486360356785, 232.92995904643783)
+</pre></div></div>
+</div>
+<p>希望这与您在作业中以数值解方式找到的一致。</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="02 Solving the zero-dimensional EBM.html" class="btn btn-neutral" title="第2课：求解零维能量平衡模式" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Fanghua Wu.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

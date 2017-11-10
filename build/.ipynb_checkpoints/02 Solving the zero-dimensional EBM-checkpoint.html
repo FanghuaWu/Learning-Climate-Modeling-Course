@@ -1,0 +1,998 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>第2课：求解零维能量平衡模式 &mdash; Climate Modeling 0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Climate Modeling 0.0 documentation" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Climate Modeling
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01 Planetary energy budget.html">第1课：行星能量收支</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02 Solving the zero-dimensional EBM.html">第2课：求解零维能量平衡模式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03 Climate Sensitivity and Feedback.html">第3课：气候敏感度和反馈</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Climate Modeling</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>第2课：求解零维能量平衡模式</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/.ipynb_checkpoints/02 Solving the zero-dimensional EBM-checkpoint.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-bold { font-weight: bold; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="第2课：求解零维能量平衡模式">
+<h1>第2课：求解零维能量平衡模式<a class="headerlink" href="#第2课：求解零维能量平衡模式" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="上节课：">
+<h2>上节课：<a class="headerlink" href="#上节课：" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">我们写下全球气候系统的收支</p>
+</li>
+<li><p class="first">我们根据有效辐射温度<img class="math" src="../_images/math/f5339fd8776a3b7a951bfacc10f6c264c2722ca6.png" alt="T_e"/>来写OLR</p>
+</li>
+<li><p class="first">地球的平衡辐射温度约为<img class="math" src="../_images/math/ba2f0e7731ceccfbe6daa72ecf0c748d248ab396.png" alt="T_e \approx 255K"/></p>
+</li>
+<li><p class="first">这仅取决于来自太阳的能量输出，和行星反照率</p>
+</li>
+<li><p class="first">我们假定全球能量正比于表面温度<img class="math" src="../_images/math/a9768475a0024f74567dfa3db0f51240f0479382.png" alt="T_s"/></p>
+</li>
+<li><p class="first">因此我们有一包含两个未知数的单一方程：</p>
+<div class="math">
+<p><img src="../_images/math/c2bfd76e7ac16f6c317576ee7a05c4b5b615ee2b.png" alt="\begin{equation*}
+C\frac{dT_s}{dt} = (1-\alpha)Q-\sigma T_e^4
+\end{equation*}"/></p>
+</div></li>
+</ul>
+<div class="section" id="OLR对表面温度依赖性的参数化">
+<h3>OLR对表面温度依赖性的参数化<a class="headerlink" href="#OLR对表面温度依赖性的参数化" title="Permalink to this headline">¶</a></h3>
+<p>接着，我们将引入气柱辐射传输的额外物理属性以连接<img class="math" src="../_images/math/a9768475a0024f74567dfa3db0f51240f0479382.png" alt="T_s"/>和<img class="math" src="../_images/math/f5339fd8776a3b7a951bfacc10f6c264c2722ca6.png" alt="T_e"/>。为此，我们将采用我们所能采用的最简单假设：</p>
+<div class="math">
+<p><img src="../_images/math/67b11349563dd796e48248bac4ed46855d73768b.png" alt="\begin{equation*}
+T_e=\beta T_s
+\end{equation*}"/></p>
+</div><p>其中<img class="math" src="../_images/math/410a9d0df9c135dd73b269cba7ef04dcfd932b1f.png" alt="\beta"/>为无量纲常数。
+这是个参数化，我们引入模式中为了简化。需要一个用于<strong>参数</strong><img class="math" src="../_images/math/410a9d0df9c135dd73b269cba7ef04dcfd932b1f.png" alt="\beta"/>，从观测：</p>
+<div class="math">
+<p><img src="../_images/math/52c9e1410be884a32d1312a62d15946d054a1bb7.png" alt="\begin{align*}
+T_e &amp;= 255K \\
+T_s &amp;= 288K
+\end{align*}"/></p>
+</div><p>因此</p>
+<div class="math">
+<p><img src="../_images/math/5042cd44128ddcf2e1bd35e939bced6bf7bc5681.png" alt="\begin{equation*}
+\beta=255/288=0.885
+\end{equation*}"/></p>
+</div><p>采用这个参数化，我们现在可以对表面温度写出闭合方程：</p>
+<div class="math">
+<p><img src="../_images/math/c1464751d26662ac1d1952899667fce96b30276e.png" alt="\begin{equation*}
+C\frac{dT_s}{dt}=(1-\alpha)Q-\sigma(\beta T)^4
+\end{equation*}"/></p>
+</div></div>
+<div class="section" id="求解能量平衡模式">
+<h3>求解能量平衡模式<a class="headerlink" href="#求解能量平衡模式" title="Permalink to this headline">¶</a></h3>
+<p>这是个<img class="math" src="../_images/math/a9768475a0024f74567dfa3db0f51240f0479382.png" alt="T_s"/>的一阶常微分方程，时间函数。这也是我们的第一个气候模式。</p>
+<p>为了求解它（即考察<img class="math" src="../_images/math/a9768475a0024f74567dfa3db0f51240f0479382.png" alt="T_s"/>如何从某些特定初始条件变化）我们有两个选择：
+1. 解析解 2. 数值解</p>
+<p>选择1通常不可能因为方程过于复杂和非线性。这就是为什么计算机在气候模拟的世界里是我们最好的朋友。</p>
+<p>但是，如果可能的话，将模式简化为解析解是有用的和有益的。为什么？两个原因：
+1. 分析往往会对系统的行为产生更深的理解 2. 为我们测试数值解提供一个基准</p>
+</div>
+<div class="section" id="平衡解">
+<h3>平衡解<a class="headerlink" href="#平衡解" title="Permalink to this headline">¶</a></h3>
+<p>注意表面平衡温度为</p>
+<div class="math">
+<p><img src="../_images/math/162a755134b5ce5e9aafe19756366994c9dcc754.png" alt="\begin{equation*}
+\bar{T_s}=\frac{1}{\beta}\left(\frac{(1-\alpha)Q}{\sigma}\right)^{\frac{1}{4}}=288K
+\end{equation*}"/></p>
+</div><p>我们将从这个方程中去掉微小扰动从而线性化方程。</p>
+<p>设<img class="math" src="../_images/math/df12068aff25e8191f9ab6c3ef22aaf7b09f2b3b.png" alt="T_{s} = \bar{T_{s}}+T_{s}^{'}"/>，限制<img class="math" src="../_images/math/942b667ccae56d3d1e15517c93ad92fa5042c76f.png" alt="T_{s}^{'}&lt;&lt;\bar{T_{s}}"/>。注意这不是一个大的限制！例如，增暖或降温10度仅是绝对平衡温度的<img class="math" src="../_images/math/4ce02577e545c35830a73afc66eb9a600f4015a4.png" alt="\pm3.4\%"/>。</p>
+</div>
+<div class="section" id="线性化控制方程：反馈参数">
+<h3>线性化控制方程：反馈参数<a class="headerlink" href="#线性化控制方程：反馈参数" title="Permalink to this headline">¶</a></h3>
+<p>现在采用一阶泰勒展开：</p>
+<div class="math">
+<p><img src="../_images/math/8c25cccc243c90dc9abc5e6084cad9930cabb308.png" alt="\begin{equation*}
+OLR\approx\sigma(\beta T_{s})^{4}\approx\sigma(\beta\bar{T_{s}})^{4}+\left(4\sigma\beta^{4}\bar{T_{s}}^{3}\right)T_{s}^{'}
+\end{equation*}"/></p>
+</div><p>对扰动温度的收支为</p>
+<div class="math">
+<p><img src="../_images/math/b309471d114f5022586a9b1be52f7c3125bd4e2e.png" alt="\begin{equation*}
+C\frac{dT_{s}^{'}}{dt}=\lambda T_{s}^{'}
+\end{equation*}"/></p>
+</div><p>这里我们定义</p>
+<div class="math">
+<p><img src="../_images/math/7d07c2a57c14add996f053dffc7b6dafe818f689.png" alt="\begin{equation*}
+\lambda=-\left(4\sigma\beta^{4}\bar{T_{s}}^{3}\right)
+\end{equation*}"/></p>
+</div><p>这里<img class="math" src="../_images/math/76f1d8ace30435987c01a00ca53a71cba1f40e6c.png" alt="\lambda"/>对我们系统实际是反馈参数。在后面课程我们将谈论更多关于这个参数。放进我们的观测值，有<img class="math" src="../_images/math/567a748bbaeaad6dffaab6be7f648de60d4dc0f6.png" alt="\lambda=-3.3W m^{-2} K^{-1}"/>。</p>
+<p>这实际上是我们后来称之为<strong>普朗克反馈</strong>的第一个估计，这个反馈在每个气候模式中都可以找到。一个温暖的表面倾向于通过增加长波辐射到太空而冷却。我们引入负号表明这是一个负反馈，这往往会使系统恢复平衡。再次，我们将在课程的后面回到这个讨论。</p>
+</div>
+<div class="section" id="求解线性常微分方程">
+<h3>求解线性常微分方程<a class="headerlink" href="#求解线性常微分方程" title="Permalink to this headline">¶</a></h3>
+<p>现在定义</p>
+<div class="math">
+<p><img src="../_images/math/584a2494528f793435c62614fe18d5d3509d479f.png" alt="\begin{equation*}
+\tau = C/(-\lambda)
+\end{equation*}"/></p>
+</div><p>这是时间维（秒）的正值常数。根据这些定义，温度会变化根据</p>
+<div class="math">
+<p><img src="../_images/math/2449ee3204bd53f2f25e1980145f340ec18b3ac8.png" alt="\begin{equation*}
+\frac{dT_{s}^{'}}{dt} = -\frac{T_{s}^{'}}{\tau}
+\end{equation*}"/></p>
+</div><p>这是最简单常微分方程之一。希望它看上去像你熟悉的大多数方程。这是一个指数衰减过程的等式。我们可以很容易地从初始条件积分求解温度演变<img class="math" src="../_images/math/3d02d3e22ebd51f77798be2b97464ac4bd365051.png" alt="T_{s}^{'}(0)"/>:</p>
+<div class="math">
+<p><img src="../_images/math/e7e5b14fb30f928451f3a842cace9ea39bacc44a.png" alt="\begin{align*}
+\int_{T_{s}^{'}(0)}^{T_{s}^{'}(t)}{\frac{dT_{s}^{'}}{T_{s}^{'}}} &amp;= -\int_{0}^{t}{\frac{dt}{\tau}}\\
+ln\left(\frac{T_{s}^{'}(t)}{T_{s}^{'}(0)}\right) &amp;= -\frac{t}{\tau}\\
+T_{s}^{'}(t)&amp;=T_{s}^{'}(0)exp\left(-\frac{t}{\tau}\right)
+\end{align*}"/></p>
+</div><p>我希望这门课的每个人都能直接学习数学。如果没有，请仔细阅读，并确保您了解每一步。</p>
+</div>
+<div class="section" id="用于松弛全球平均温度的指数递减时间">
+<h3>用于松弛全球平均温度的指数递减时间<a class="headerlink" href="#用于松弛全球平均温度的指数递减时间" title="Permalink to this headline">¶</a></h3>
+<p>表面温度将在特征时间尺度<img class="math" src="../_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/>范围内向它的平衡值松弛。这是<strong>指数递减时间</strong>——一个变量衰减到它初值的1/e=0.37所需要的时间。</p>
+<p>这个时间尺度对于气候系统应是什么？</p>
+<p>为估计<img class="math" src="../_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/>我们需要一个用于有效热能<img class="math" src="../_images/math/afce44aa7c55836ca9345404c22fc7b599d2ed84.png" alt="C"/>的值。快速和粗略估计</p>
+<div class="math">
+<p><img src="../_images/math/6409f82f7ee1f6516d4fe9340908de0d52b5bcbd.png" alt="\begin{equation*}
+C=c_{w}\rho_{w}H
+\end{equation*}"/></p>
+</div><p>这里</p>
+<p><img class="math" src="../_images/math/940d6dc2e953ac97713ea070eb29a9fc13daf0b3.png" alt="c_{w}=4\times10^{3} J kg^{-1}"/>
+<img class="math" src="../_images/math/5cddc68efe40d84972eee02005d7099dd2efd839.png" alt="^{\circ} C^{-1}"/>是水的比热。</p>
+<p><img class="math" src="../_images/math/8fe1d099f2fc5aa916fd2b2e65ea7e036f438375.png" alt="\rho_{w}=10^{3} kg m^{-3}"/>是水的密度，以及</p>
+<p><img class="math" src="../_images/math/44d4c3f22452acebfb3ac644e23508b67500be90.png" alt="H"/>是水加热或冷却的有效深度。</p>
+<p>对于<img class="math" src="../_images/math/44d4c3f22452acebfb3ac644e23508b67500be90.png" alt="H"/>正确的选择是什么？这原来是一个有趣而微妙的问题。这很大程度上取决于问题的时间尺度
+- 天？ - 年？ - 年代际？ - 千年？</p>
+<p>我们在后面课程将回到这个问题。现在，我们仅假定<img class="math" src="../_images/math/eb9d73b9e8ab14beaa8387d10254900f35501e0a.png" alt="H=100m"/>（比海洋中表面混合层的典型深度要深一点）。</p>
+<p>那么<img class="math" src="../_images/math/95027f5ad51d7dc7e170d29a344e4bf54dd322d3.png" alt="C=4\times10^{8} J m^{-2} K^{-1}"/>。对于表面温度的指数递减时间为</p>
+<div class="math">
+<p><img src="../_images/math/4b5b9126753163a33a230ccd17a5b3872ccc66ad.png" alt="\begin{equation*}
+\tau=\frac{4\times10^{8}Jm^{-2}K^{-1}}{3.3Wm^{-2}K^{-1}}=1.4\times10^{8}s\approx4years
+\end{equation*}"/></p>
+</div><p>这对于我们后面将要讨论到的其他影响行星能量收支的过程而言是相对的快过程。</p>
+<p>一些重要信息： -
+地球（或任何行星）由于出去的长波辐射的温度依赖性而具有明确的平衡温度。 -
+在指数衰减时间尺度上系统倾向向的平衡温度松弛，这个时间尺度取决于（1）辐射反馈过程和（2）有效热容量。
+-
+在我们的估计中，这个指数衰减时间相对较短。在没有可以增加热容量或者降低（绝对值）反馈参数的其他过程的情况下，地球永远不会远离能量平衡。
+- 我们将这个术语进一步量化这个陈述。</p>
+</div>
+<div class="section" id="在Python中绘制解">
+<h3>在Python中绘制解<a class="headerlink" href="#在Python中绘制解" title="Permalink to this headline">¶</a></h3>
+<p>在这里，我将展示一些使用Python进行简单线图的示例代码。我强烈建议你自己尝试一下。<strong>避免复制和粘贴代码的诱惑！</strong>你不会学到任何东西。将代码键入到您自己的Python会话中。试用它！</p>
+<p>首先，我们将定义一堆常量。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">sigma</span> <span class="o">=</span> <span class="mf">5.67e-8</span> <span class="c1"># Stefan-boltzmann constant</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="mf">341.3</span> <span class="c1"># global mean incoming solar radiation</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.299</span> <span class="c1"># planetary albedo</span>
+<span class="n">Tsbar</span> <span class="o">=</span> <span class="mf">288.</span> <span class="c1"># global mean temperature</span>
+<span class="n">Te</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> <span class="n">Q</span> <span class="o">/</span> <span class="n">sigma</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span> <span class="c1"># emission temperature</span>
+<span class="k">print</span><span class="p">(</span><span class="n">Te</span><span class="p">)</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="n">Te</span> <span class="o">/</span> <span class="n">Tsbar</span>
+<span class="n">lambda0</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">beta</span><span class="o">**</span><span class="mi">4</span> <span class="o">*</span> <span class="n">Tsbar</span><span class="o">**</span><span class="mi">3</span>
+<span class="k">print</span><span class="p">(</span><span class="n">lambda0</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="mf">4e8</span>
+<span class="n">tau</span> <span class="o">=</span> <span class="n">C</span> <span class="o">/</span> <span class="p">(</span><span class="o">-</span><span class="n">lambda0</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">tau</span><span class="p">)</span>
+<span class="n">seconds_per_year</span> <span class="o">=</span> <span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">24</span><span class="o">*</span><span class="mi">365</span>
+<span class="k">print</span><span class="p">(</span><span class="n">tau</span><span class="o">/</span><span class="n">seconds_per_year</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+254.869467654
+-3.32293472222
+120375521.471
+3.81708274577
+</pre></div></div>
+</div>
+<p>此代码使用numpy包进行高效的数组操作。在使用包之前，我们将它导入到当前的Python会话中。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="o">*</span><span class="n">tau</span><span class="p">)</span> <span class="c1"># a time array, return evenly spaced number over a specified interval. Default number = 50.</span>
+<span class="k">print</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="c1"># this shows t is numpy.ndarray type</span>
+<span class="n">Tsprime0</span> <span class="o">=</span> <span class="mf">6.</span> <span class="c1"># initial temperature perturbation</span>
+<span class="c1"># Here we define the actual solution</span>
+<span class="n">Tsprime</span> <span class="o">=</span> <span class="n">Tsbar</span> <span class="o">+</span> <span class="n">Tsprime0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t</span><span class="o">/</span><span class="n">tau</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">Tsprime</span><span class="p">)</span>
+<span class="n">Tsprime</span><span class="o">.</span><span class="n">shape</span>
+<span class="c1"># got the same size array</span>
+<span class="c1"># the numpy function np.exp() operated simultaneously</span>
+<span class="c1"># on all elements of the array</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[  0.00000000e+00   1.22832165e+07   2.45664330e+07   3.68496494e+07
+   4.91328659e+07   6.14160824e+07   7.36992989e+07   8.59825153e+07
+   9.82657318e+07   1.10548948e+08   1.22832165e+08   1.35115381e+08
+   1.47398598e+08   1.59681814e+08   1.71965031e+08   1.84248247e+08
+   1.96531464e+08   2.08814680e+08   2.21097897e+08   2.33381113e+08
+   2.45664330e+08   2.57947546e+08   2.70230762e+08   2.82513979e+08
+   2.94797195e+08   3.07080412e+08   3.19363628e+08   3.31646845e+08
+   3.43930061e+08   3.56213278e+08   3.68496494e+08   3.80779711e+08
+   3.93062927e+08   4.05346144e+08   4.17629360e+08   4.29912577e+08
+   4.42195793e+08   4.54479010e+08   4.66762226e+08   4.79045443e+08
+   4.91328659e+08   5.03611876e+08   5.15895092e+08   5.28178308e+08
+   5.40461525e+08   5.52744741e+08   5.65027958e+08   5.77311174e+08
+   5.89594391e+08   6.01877607e+08]
+[ 294.          293.41795616  292.89237483  292.41777873  291.98922192
+  291.60223825  291.25279482  290.93724996  290.65231525  290.3950213
+  290.16268673  289.95289032  289.76344569  289.59237857  289.43790622
+  289.29841881  289.1724627   289.05872525  288.95602117  288.86328013
+  288.77953565  288.703915    288.6356301   288.57396934  288.51829012
+  288.46801219  288.42261159  288.38161518  288.34459572  288.31116741
+  288.2809819   288.2537246   288.22911146  288.20688598  288.18681653
+  288.16869396  288.15232941  288.13755235  288.12420876  288.11215961
+  288.1012793   288.09145447  288.08258272  288.07457159  288.0673376
+  288.06080536  288.0549068   288.04958044  288.04477077  288.04042768]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[10]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>(50,)
+</pre></div>
+</div>
+</div>
+<p>为画一张图，我们将使用matplotlib库。绘图命令与MATLAB很相似。但是，像其他软件包一样，我们需要在使用之前将其导入。</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># pyplot is the name of the library of plotting routines within matplotlib</span>
+<span class="c1"># here we import them and give them a &quot;nickname&quot;</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># this command allows the plots to appear inline in this notebook</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">Tsprime</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[11]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>[&lt;matplotlib.lines.Line2D at 0x10b58b2d0&gt;]
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/.ipynb_checkpoints_02_Solving_the_zero-dimensional_EBM-checkpoint_14_1.png" src="../_images/.ipynb_checkpoints_02_Solving_the_zero-dimensional_EBM-checkpoint_14_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># use a more convenient unit for time</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span> <span class="o">/</span> <span class="n">seconds_per_year</span><span class="p">,</span> <span class="n">Tsprime</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[12]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>[&lt;matplotlib.lines.Line2D at 0x10b6a8590&gt;]
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/.ipynb_checkpoints_02_Solving_the_zero-dimensional_EBM-checkpoint_15_1.png" src="../_images/.ipynb_checkpoints_02_Solving_the_zero-dimensional_EBM-checkpoint_15_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># Or add some helpful labels</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span> <span class="o">/</span> <span class="n">seconds_per_year</span><span class="p">,</span> <span class="n">Tsprime</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Years&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Global mean temperature (K)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Relaxation to equilibtrium temperature&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[14]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.text.Text at 0x10b854210&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/.ipynb_checkpoints_02_Solving_the_zero-dimensional_EBM-checkpoint_16_1.png" src="../_images/.ipynb_checkpoints_02_Solving_the_zero-dimensional_EBM-checkpoint_16_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="数值求解常微分方程">
+<h3>数值求解常微分方程<a class="headerlink" href="#数值求解常微分方程" title="Permalink to this headline">¶</a></h3>
+<p>在这种情况下，方程非常简单，我们有一个解析解。大多数模型在数学上太复杂，我们需要数值求解方法。由于每个模型的控制方程在时间上（通常也在空间上）是不同的，所以我们需要对控制方程使用一些数值近似。</p>
+<div class="math">
+<p><img src="../_images/math/29fba707c1cc76375fd15a387bd3396c07183d51.png" alt="\begin{equation}
+\frac{dT}{dt}\approx\frac{\Delta T}{\Delta t}=\frac{T_{1}-T_{0}}{t_{1}-t_{0}}
+\end{equation}"/></p>
+</div><p>只要时间步<img class="math" src="../_images/math/d1d0c5bda433e26438f8a8dc129047eafde47723.png" alt="\delta t"/>足够小这是合理的。</p>
+<p>什么是足够小的意思？在实践中，小到数值解决方案表现良好！我们不会在这个课程上花很多时间讨论数值方法，但是我们可以对这个问题有更多的了解。</p>
+<p>最简单的时间离散化称为<strong>前向欧拉</strong>或<strong>显式欧拉</strong>。假设我们知道系统在时刻<img class="math" src="../_images/math/6b14519f0e48e358e3ca7f919b52bf51559f687b.png" alt="t_{0}"/>的状态，即我们知道温度<img class="math" src="../_images/math/042bf4d32b6b28cf9e3ae5cdb3b2bed9b2c70ac9.png" alt="T_{0}"/>。然后重新排列上面，</p>
+<div class="math">
+<p><img src="../_images/math/d8da167158c0070f80a990515c0c8b203b59fc88.png" alt="\begin{equation}
+T_{1}=T_{0}+\Delta t(dT/dt)
+\end{equation}"/></p>
+</div><p>因此如果我们计算在时刻<img class="math" src="../_images/math/6b14519f0e48e358e3ca7f919b52bf51559f687b.png" alt="t_{0}"/>系统的倾向（即时间导数），那么我们有一个公式来预测系统的下一个状态。</p>
+<p>对于我们线性零维能量平衡模式，</p>
+<div class="math">
+<p><img src="../_images/math/e7531e22b98aedee1b7a9d74f880b300294256d5.png" alt="\begin{equation}
+\frac{dT_{s}}{dt}=-\frac{1}{\tau}\left(T_{s}-\bar{T_{s}}\right)
+\end{equation}"/></p>
+</div><p>因此我们可以预测温度</p>
+<div class="math">
+<p><img src="../_images/math/337e14a6c0ed1f758688a1ee594d74e237e250f7.png" alt="\begin{equation}
+T_{1}=T_{0}-\frac{\Delta t}{\tau}\left(T_{0}-\bar{T_{s}}\right)
+\end{equation}"/></p>
+</div><p>让我们在Python中用一个简单函数实现这个公式来计算每个时间步的下一个温度</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">next_temperature</span><span class="p">(</span><span class="n">T0</span><span class="p">,</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">tau</span><span class="p">):</span>
+    <span class="n">Tsbar</span> <span class="o">=</span> <span class="mf">288.</span>
+    <span class="k">return</span> <span class="n">T0</span> <span class="o">-</span> <span class="n">timestep</span><span class="o">/</span><span class="n">tau</span> <span class="o">*</span> <span class="p">(</span><span class="n">T0</span><span class="o">-</span><span class="n">Tsbar</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>现在通过对时间做循环构造完整数值解</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">Tnumerical</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">Tnumerical</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">Tnumerical</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="c1"># Assign the initial condition</span>
+<span class="n">Tnumerical</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Tsprime0</span> <span class="o">+</span> <span class="n">Tsbar</span>
+<span class="k">print</span><span class="p">(</span><span class="n">Tnumerical</span><span class="p">)</span>
+<span class="c1"># this shows indexing of the time array. t[0] is the first element</span>
+<span class="c1"># t[1] is the second element</span>
+<span class="c1"># in Python we always start counting from zero</span>
+<span class="n">timestep</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="n">Tnumerical</span><span class="o">.</span><span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="c1"># assign the next temperature value to the approprate array elemetn</span>
+    <span class="n">Tnumerical</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">next_temperature</span><span class="p">(</span><span class="n">Tnumerical</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">tau</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">Tnumerical</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[ 0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
+  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
+  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.]
+50
+[ 294.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.]
+[ 294.          293.3877551   292.83798417  292.34431232  291.90101514
+  291.50295237  291.14550825  290.82453802  290.53631986  290.27751171
+  290.04511256  289.8364276   289.64903703  289.48076794  289.32966917
+  289.19398865  289.07215307  288.9627497   288.86450993  288.77629463
+  288.69708089  288.62595019  288.56207772  288.50472285  288.45322052
+  288.40697353  288.36544562  288.32815525  288.29467002  288.26460165
+  288.23760148  288.21335643  288.19158537  288.17203584  288.15448116
+  288.13871778  288.1245629   288.1118524   288.10043889  288.09019003
+  288.08098696  288.07272299  288.06530227  288.05863878  288.05265523
+  288.04728225  288.04245753  288.03812513  288.03423481  288.03074146]
+</pre></div></div>
+</div>
+<p>现在我们要把这个和解析解一起画出来。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span> <span class="o">/</span> <span class="n">seconds_per_year</span><span class="p">,</span> <span class="n">Tsprime</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;analytical&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span> <span class="o">/</span> <span class="n">seconds_per_year</span><span class="p">,</span> <span class="n">Tnumerical</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;numerical&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Years&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Global mean temperature (K)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Relaxation to equilibrium temperature&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="c1"># the legend() function uses the labels assigned in the above plot() command</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[20]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.legend.Legend at 0x10ba01690&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/.ipynb_checkpoints_02_Solving_the_zero-dimensional_EBM-checkpoint_23_1.png" src="../_images/.ipynb_checkpoints_02_Solving_the_zero-dimensional_EBM-checkpoint_23_1.png" />
+</div>
+</div>
+<p>所以这个工作很好。这两种解看起来几乎一样.</p>
+<p>现在我们已经对数值方法有了一定的信心，我们可以用它来研究一个稍微复杂一点的系统，但是我们没有解析解。</p>
+<p>例如，让我们来解决完整的非线性能量平衡模式：</p>
+<div class="math">
+<p><img src="../_images/math/6972a6499c59cbcdade7c016ba382448324968b9.png" alt="\begin{equation}
+C\frac{dT_{s}}{dt}=(1-\alpha)Q-\sigma\left(\beta T_{s}\right)^{4}
+\end{equation}"/></p>
+</div><p>写一个新的求解函数：</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># absorbed solar is a constant in this model</span>
+<span class="n">ASR</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> <span class="n">Q</span>
+<span class="c1"># but the longwave depends on temperature... define a function for this</span>
+<span class="k">def</span> <span class="nf">OLR</span><span class="p">(</span><span class="n">Ts</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">sigma</span> <span class="o">*</span> <span class="p">(</span><span class="n">beta</span><span class="o">*</span><span class="n">Ts</span><span class="p">)</span><span class="o">**</span><span class="mi">4</span>
+<span class="c1"># Now we put them together to get our simple solver function</span>
+<span class="k">def</span> <span class="nf">next_temperature_nonlinear</span><span class="p">(</span><span class="n">T0</span><span class="p">,</span> <span class="n">timestemp</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">T0</span> <span class="o">+</span> <span class="n">timestep</span><span class="o">/</span><span class="n">C</span> <span class="o">*</span> <span class="p">(</span><span class="n">ASR</span><span class="o">-</span><span class="n">OLR</span><span class="p">(</span><span class="n">T0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>现在我们将按照上述相同的步骤来求解这个模型，并且将这个解与我们前面两个线性模型的解相一致。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">Tnonlinear</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="n">Tnonlinear</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Tsprime0</span> <span class="o">+</span> <span class="n">Tsbar</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Tnumerical</span><span class="o">.</span><span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">Tnonlinear</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">next_temperature_nonlinear</span><span class="p">(</span><span class="n">Tnonlinear</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">timestep</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span> <span class="o">/</span> <span class="n">seconds_per_year</span><span class="p">,</span> <span class="n">Tsprime</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;analytical&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span> <span class="o">/</span> <span class="n">seconds_per_year</span><span class="p">,</span> <span class="n">Tnumerical</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;numerical&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span> <span class="o">/</span> <span class="n">seconds_per_year</span><span class="p">,</span> <span class="n">Tnonlinear</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;nonliear&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Years&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Global mean temperature (K)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Relaxation to equilibrium temperature&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[22]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.legend.Legend at 0x10bb68690&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/.ipynb_checkpoints_02_Solving_the_zero-dimensional_EBM-checkpoint_27_1.png" src="../_images/.ipynb_checkpoints_02_Solving_the_zero-dimensional_EBM-checkpoint_27_1.png" />
+</div>
+</div>
+<p>我们看到模型基本上做同样的事情。</p>
+<p>现在尝试一些不同的初始条件</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">T1</span> <span class="o">=</span> <span class="mf">400.</span> <span class="c1"># very hot</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
+    <span class="n">T1</span> <span class="o">=</span> <span class="n">next_temperature_nonlinear</span><span class="p">(</span><span class="n">T1</span><span class="p">,</span> <span class="n">timestep</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">T1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+288.294151595
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">T1</span> <span class="o">=</span> <span class="mf">200.</span> <span class="c1"># very cold</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
+    <span class="n">T1</span> <span class="o">=</span> <span class="n">next_temperature_nonlinear</span><span class="p">(</span><span class="n">T1</span><span class="p">,</span> <span class="n">timestep</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">T1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+287.28133982
+</pre></div></div>
+</div>
+<p>无论初始条件是什么，系统都回到288K。</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Fanghua Wu.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
