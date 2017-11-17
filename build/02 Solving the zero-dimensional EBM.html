@@ -94,17 +94,14 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="01 Planetary energy budget.html">第1课：行星能量收支</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">第2课：求解零维能量平衡模式</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#上节课：">上节课：</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#OLR对表面温度依赖性的参数化">OLR对表面温度依赖性的参数化</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#求解能量平衡模式">求解能量平衡模式</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#平衡解">平衡解</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#线性化控制方程：反馈参数">线性化控制方程：反馈参数</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#求解线性常微分方程">求解线性常微分方程</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#用于松弛全球平均温度的指数递减时间">用于松弛全球平均温度的指数递减时间</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#在Python中绘制解">在Python中绘制解</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#数值求解常微分方程">数值求解常微分方程</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#OLR对表面温度依赖性的参数化">OLR对表面温度依赖性的参数化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#求解能量平衡模式">求解能量平衡模式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#平衡解">平衡解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#线性化控制方程：反馈参数">线性化控制方程：反馈参数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#求解线性常微分方程">求解线性常微分方程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#用于松弛全球平均温度的指数递减时间">用于松弛全球平均温度的指数递减时间</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#在Python中绘制解">在Python中绘制解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#数值求解常微分方程">数值求解常微分方程</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="03 Climate Sensitivity and Feedback.html">第3课：气候敏感度和反馈</a></li>
@@ -367,28 +364,21 @@ div.nboutput div.output_area.stderr {
 </style>
 <div class="section" id="第2课：求解零维能量平衡模式">
 <h1>第2课：求解零维能量平衡模式<a class="headerlink" href="#第2课：求解零维能量平衡模式" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="上节课：">
-<h2>上节课：<a class="headerlink" href="#上节课：" title="Permalink to this headline">¶</a></h2>
-<ul>
-<li><p class="first">我们写下全球气候系统的收支</p>
-</li>
-<li><p class="first">我们根据有效辐射温度<img class="math" src="_images/math/f5339fd8776a3b7a951bfacc10f6c264c2722ca6.png" alt="T_e"/>来写OLR</p>
-</li>
-<li><p class="first">地球的平衡辐射温度约为<img class="math" src="_images/math/ba2f0e7731ceccfbe6daa72ecf0c748d248ab396.png" alt="T_e \approx 255K"/></p>
-</li>
-<li><p class="first">这仅取决于来自太阳的能量输出，和行星反照率</p>
-</li>
-<li><p class="first">我们假定全球能量正比于表面温度<img class="math" src="_images/math/a9768475a0024f74567dfa3db0f51240f0479382.png" alt="T_s"/></p>
-</li>
-<li><p class="first">因此我们有一包含两个未知数的单一方程：</p>
+<p><strong>上节课：</strong></p>
+<ul class="simple">
+<li>我们写下全球气候系统的收支</li>
+<li>我们根据有效辐射温度<img class="math" src="_images/math/f5339fd8776a3b7a951bfacc10f6c264c2722ca6.png" alt="T_e"/>来写OLR</li>
+<li>地球的平衡辐射温度约为<img class="math" src="_images/math/ba2f0e7731ceccfbe6daa72ecf0c748d248ab396.png" alt="T_e \approx 255K"/></li>
+<li>这仅取决于来自太阳的能量输出，和行星反照率</li>
+<li>我们假定全球能量正比于表面温度<img class="math" src="_images/math/a9768475a0024f74567dfa3db0f51240f0479382.png" alt="T_s"/></li>
+<li>因此我们有一包含两个未知数的单一方程：</li>
+</ul>
 <div class="math">
 <p><img src="_images/math/c2bfd76e7ac16f6c317576ee7a05c4b5b615ee2b.png" alt="\begin{equation*}
 C\frac{dT_s}{dt} = (1-\alpha)Q-\sigma T_e^4
 \end{equation*}"/></p>
-</div></li>
-</ul>
-<div class="section" id="OLR对表面温度依赖性的参数化">
-<h3>OLR对表面温度依赖性的参数化<a class="headerlink" href="#OLR对表面温度依赖性的参数化" title="Permalink to this headline">¶</a></h3>
+</div><div class="section" id="OLR对表面温度依赖性的参数化">
+<h2>OLR对表面温度依赖性的参数化<a class="headerlink" href="#OLR对表面温度依赖性的参数化" title="Permalink to this headline">¶</a></h2>
 <p>接着，我们将引入气柱辐射传输的额外物理属性以连接<img class="math" src="_images/math/a9768475a0024f74567dfa3db0f51240f0479382.png" alt="T_s"/>和<img class="math" src="_images/math/f5339fd8776a3b7a951bfacc10f6c264c2722ca6.png" alt="T_e"/>。为此，我们将采用我们所能采用的最简单假设：</p>
 <div class="math">
 <p><img src="_images/math/67b11349563dd796e48248bac4ed46855d73768b.png" alt="\begin{equation*}
@@ -413,7 +403,7 @@ C\frac{dT_s}{dt}=(1-\alpha)Q-\sigma(\beta T)^4
 \end{equation*}"/></p>
 </div></div>
 <div class="section" id="求解能量平衡模式">
-<h3>求解能量平衡模式<a class="headerlink" href="#求解能量平衡模式" title="Permalink to this headline">¶</a></h3>
+<h2>求解能量平衡模式<a class="headerlink" href="#求解能量平衡模式" title="Permalink to this headline">¶</a></h2>
 <p>这是个<img class="math" src="_images/math/a9768475a0024f74567dfa3db0f51240f0479382.png" alt="T_s"/>的一阶常微分方程，时间函数。这也是我们的第一个气候模式。</p>
 <p>为了求解它（即考察<img class="math" src="_images/math/a9768475a0024f74567dfa3db0f51240f0479382.png" alt="T_s"/>如何从某些特定初始条件变化）我们有两个选择：
 1. 解析解 2. 数值解</p>
@@ -422,7 +412,7 @@ C\frac{dT_s}{dt}=(1-\alpha)Q-\sigma(\beta T)^4
 1. 分析往往会对系统的行为产生更深的理解 2. 为我们测试数值解提供一个基准</p>
 </div>
 <div class="section" id="平衡解">
-<h3>平衡解<a class="headerlink" href="#平衡解" title="Permalink to this headline">¶</a></h3>
+<h2>平衡解<a class="headerlink" href="#平衡解" title="Permalink to this headline">¶</a></h2>
 <p>注意表面平衡温度为</p>
 <div class="math">
 <p><img src="_images/math/162a755134b5ce5e9aafe19756366994c9dcc754.png" alt="\begin{equation*}
@@ -432,7 +422,7 @@ C\frac{dT_s}{dt}=(1-\alpha)Q-\sigma(\beta T)^4
 <p>设<img class="math" src="_images/math/df12068aff25e8191f9ab6c3ef22aaf7b09f2b3b.png" alt="T_{s} = \bar{T_{s}}+T_{s}^{'}"/>，限制<img class="math" src="_images/math/942b667ccae56d3d1e15517c93ad92fa5042c76f.png" alt="T_{s}^{'}&lt;&lt;\bar{T_{s}}"/>。注意这不是一个大的限制！例如，增暖或降温10度仅是绝对平衡温度的<img class="math" src="_images/math/4ce02577e545c35830a73afc66eb9a600f4015a4.png" alt="\pm3.4\%"/>。</p>
 </div>
 <div class="section" id="线性化控制方程：反馈参数">
-<h3>线性化控制方程：反馈参数<a class="headerlink" href="#线性化控制方程：反馈参数" title="Permalink to this headline">¶</a></h3>
+<h2>线性化控制方程：反馈参数<a class="headerlink" href="#线性化控制方程：反馈参数" title="Permalink to this headline">¶</a></h2>
 <p>现在采用一阶泰勒展开：</p>
 <div class="math">
 <p><img src="_images/math/8c25cccc243c90dc9abc5e6084cad9930cabb308.png" alt="\begin{equation*}
@@ -452,7 +442,7 @@ C\frac{dT_{s}^{'}}{dt}=\lambda T_{s}^{'}
 <p>这实际上是我们后来称之为<strong>普朗克反馈</strong>的第一个估计，这个反馈在每个气候模式中都可以找到。一个温暖的表面倾向于通过增加长波辐射到太空而冷却。我们引入负号表明这是一个负反馈，这往往会使系统恢复平衡。再次，我们将在课程的后面回到这个讨论。</p>
 </div>
 <div class="section" id="求解线性常微分方程">
-<h3>求解线性常微分方程<a class="headerlink" href="#求解线性常微分方程" title="Permalink to this headline">¶</a></h3>
+<h2>求解线性常微分方程<a class="headerlink" href="#求解线性常微分方程" title="Permalink to this headline">¶</a></h2>
 <p>现在定义</p>
 <div class="math">
 <p><img src="_images/math/584a2494528f793435c62614fe18d5d3509d479f.png" alt="\begin{equation*}
@@ -473,7 +463,7 @@ T_{s}^{'}(t)&amp;=T_{s}^{'}(0)exp\left(-\frac{t}{\tau}\right)
 </div><p>我希望这门课的每个人都能直接学习数学。如果没有，请仔细阅读，并确保您了解每一步。</p>
 </div>
 <div class="section" id="用于松弛全球平均温度的指数递减时间">
-<h3>用于松弛全球平均温度的指数递减时间<a class="headerlink" href="#用于松弛全球平均温度的指数递减时间" title="Permalink to this headline">¶</a></h3>
+<h2>用于松弛全球平均温度的指数递减时间<a class="headerlink" href="#用于松弛全球平均温度的指数递减时间" title="Permalink to this headline">¶</a></h2>
 <p>表面温度将在特征时间尺度<img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/>范围内向它的平衡值松弛。这是<strong>指数递减时间</strong>——一个变量衰减到它初值的1/e=0.37所需要的时间。</p>
 <p>这个时间尺度对于气候系统应是什么？</p>
 <p>为估计<img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/>我们需要一个用于有效热能<img class="math" src="_images/math/afce44aa7c55836ca9345404c22fc7b599d2ed84.png" alt="C"/>的值。快速和粗略估计</p>
@@ -503,12 +493,12 @@ C=c_{w}\rho_{w}H
 - 我们将这个术语进一步量化这个陈述。</p>
 </div>
 <div class="section" id="在Python中绘制解">
-<h3>在Python中绘制解<a class="headerlink" href="#在Python中绘制解" title="Permalink to this headline">¶</a></h3>
+<h2>在Python中绘制解<a class="headerlink" href="#在Python中绘制解" title="Permalink to this headline">¶</a></h2>
 <p>在这里，我将展示一些使用Python进行简单线图的示例代码。我强烈建议你自己尝试一下。<strong>避免复制和粘贴代码的诱惑！</strong>你不会学到任何东西。将代码键入到您自己的Python会话中。试用它！</p>
 <p>首先，我们将定义一堆常量。</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [6]:
+<span></span>In [1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython2"><div class="highlight"><pre>
@@ -543,7 +533,7 @@ C=c_{w}\rho_{w}H
 <p>此代码使用numpy包进行高效的数组操作。在使用包之前，我们将它导入到当前的Python会话中。</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [10]:
+<span></span>In [2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython2"><div class="highlight"><pre>
@@ -594,7 +584,7 @@ C=c_{w}\rho_{w}H
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>Out[10]:
+<span></span>Out[2]:
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
@@ -628,7 +618,7 @@ C=c_{w}\rho_{w}H
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [11]:
+<span></span>In [5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython2"><div class="highlight"><pre>
@@ -638,11 +628,11 @@ C=c_{w}\rho_{w}H
 </div>
 <div class="nboutput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>Out[11]:
+<span></span>Out[5]:
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>[&lt;matplotlib.lines.Line2D at 0x10b58b2d0&gt;]
+<span></span>[&lt;matplotlib.lines.Line2D at 0x10cdf58d0&gt;]
 </pre></div>
 </div>
 </div>
@@ -655,7 +645,7 @@ C=c_{w}\rho_{w}H
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [12]:
+<span></span>In [6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython2"><div class="highlight"><pre>
@@ -666,11 +656,11 @@ C=c_{w}\rho_{w}H
 </div>
 <div class="nboutput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>Out[12]:
+<span></span>Out[6]:
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>[&lt;matplotlib.lines.Line2D at 0x10b6a8590&gt;]
+<span></span>[&lt;matplotlib.lines.Line2D at 0x10cf50e50&gt;]
 </pre></div>
 </div>
 </div>
@@ -683,7 +673,7 @@ C=c_{w}\rho_{w}H
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [14]:
+<span></span>In [7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython2"><div class="highlight"><pre>
@@ -697,11 +687,11 @@ C=c_{w}\rho_{w}H
 </div>
 <div class="nboutput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>Out[14]:
+<span></span>Out[7]:
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>&lt;matplotlib.text.Text at 0x10b854210&gt;
+<span></span>&lt;matplotlib.text.Text at 0x10cfefad0&gt;
 </pre></div>
 </div>
 </div>
@@ -714,7 +704,7 @@ C=c_{w}\rho_{w}H
 </div>
 </div>
 <div class="section" id="数值求解常微分方程">
-<h3>数值求解常微分方程<a class="headerlink" href="#数值求解常微分方程" title="Permalink to this headline">¶</a></h3>
+<h2>数值求解常微分方程<a class="headerlink" href="#数值求解常微分方程" title="Permalink to this headline">¶</a></h2>
 <p>在这种情况下，方程非常简单，我们有一个解析解。大多数模型在数学上太复杂，我们需要数值求解方法。由于每个模型的控制方程在时间上（通常也在空间上）是不同的，所以我们需要对控制方程使用一些数值近似。</p>
 <div class="math">
 <p><img src="_images/math/29fba707c1cc76375fd15a387bd3396c07183d51.png" alt="\begin{equation}
@@ -741,7 +731,7 @@ T_{1}=T_{0}-\frac{\Delta t}{\tau}\left(T_{0}-\bar{T_{s}}\right)
 </div><p>让我们在Python中用一个简单函数实现这个公式来计算每个时间步的下一个温度</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [15]:
+<span></span>In [8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython2"><div class="highlight"><pre>
@@ -754,7 +744,7 @@ T_{1}=T_{0}-\frac{\Delta t}{\tau}\left(T_{0}-\bar{T_{s}}\right)
 <p>现在通过对时间做循环构造完整数值解</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [18]:
+<span></span>In [9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython2"><div class="highlight"><pre>
@@ -804,7 +794,7 @@ T_{1}=T_{0}-\frac{\Delta t}{\tau}\left(T_{0}-\bar{T_{s}}\right)
 <p>现在我们要把这个和解析解一起画出来。</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [20]:
+<span></span>In [10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython2"><div class="highlight"><pre>
@@ -820,11 +810,11 @@ T_{1}=T_{0}-\frac{\Delta t}{\tau}\left(T_{0}-\bar{T_{s}}\right)
 </div>
 <div class="nboutput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>Out[20]:
+<span></span>Out[10]:
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>&lt;matplotlib.legend.Legend at 0x10ba01690&gt;
+<span></span>&lt;matplotlib.legend.Legend at 0x10d1c76d0&gt;
 </pre></div>
 </div>
 </div>
@@ -845,7 +835,7 @@ C\frac{dT_{s}}{dt}=(1-\alpha)Q-\sigma\left(\beta T_{s}\right)^{4}
 </div><p>写一个新的求解函数：</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [21]:
+<span></span>In [11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython2"><div class="highlight"><pre>
@@ -863,7 +853,7 @@ C\frac{dT_{s}}{dt}=(1-\alpha)Q-\sigma\left(\beta T_{s}\right)^{4}
 <p>现在我们将按照上述相同的步骤来求解这个模型，并且将这个解与我们前面两个线性模型的解相一致。</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [22]:
+<span></span>In [12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython2"><div class="highlight"><pre>
@@ -883,11 +873,11 @@ C\frac{dT_{s}}{dt}=(1-\alpha)Q-\sigma\left(\beta T_{s}\right)^{4}
 </div>
 <div class="nboutput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>Out[22]:
+<span></span>Out[12]:
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>&lt;matplotlib.legend.Legend at 0x10bb68690&gt;
+<span></span>&lt;matplotlib.legend.Legend at 0x10d31e790&gt;
 </pre></div>
 </div>
 </div>
@@ -902,7 +892,7 @@ C\frac{dT_{s}}{dt}=(1-\alpha)Q-\sigma\left(\beta T_{s}\right)^{4}
 <p>现在尝试一些不同的初始条件</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [23]:
+<span></span>In [13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython2"><div class="highlight"><pre>
@@ -923,7 +913,7 @@ C\frac{dT_{s}}{dt}=(1-\alpha)Q-\sigma\left(\beta T_{s}\right)^{4}
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [24]:
+<span></span>In [14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython2"><div class="highlight"><pre>
@@ -943,7 +933,6 @@ C\frac{dT_{s}}{dt}=(1-\alpha)Q-\sigma\left(\beta T_{s}\right)^{4}
 </pre></div></div>
 </div>
 <p>无论初始条件是什么，系统都回到288K。</p>
-</div>
 </div>
 </div>
 
