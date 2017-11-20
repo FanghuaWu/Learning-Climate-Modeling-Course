@@ -13,6 +13,9 @@ Welcome to Climate Modeling's documentation!
    01 Planetary energy budget.ipynb
    02 Solving the zero-dimensional EBM.ipynb
    03 Climate Sensitivity and Feedback.ipynb
+   04 Components of the climate system.ipynb
+   05 A Brief Review of Radiation.ipynb
+   06 Elementary greenhouse models.ipynb
 
 
 
